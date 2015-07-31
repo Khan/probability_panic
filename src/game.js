@@ -99,7 +99,6 @@
         },
 
         render: function() {
-            console.log(this.props.tree);
             return <div className="game-window">
                 <div className="chat-window">
                     <div className="chat-header">
