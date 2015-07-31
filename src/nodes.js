@@ -1,5 +1,33 @@
 var React = require("../lib/react-0.13.3.js");
 (function() {
+    var _autoAdvance = function() {
+        // If we're the currently active node, wait the desired number of
+        // seconds and then automatically advance
+        if (this.props.nextNode === null) {
+            window.setTimeout(function() {
+                this.props.advanceCallback("NEXT");
+            }.bind(this), 1000 * this.props.node.nextTime);
+        }
+    };
+    var AutoAdvanceMixin = function(classDef) {
+        var oldComponentDidMount = classDef.componentDidMount;
+        classDef.componentDidMount = function() {
+            _autoAdvance.call(this);
+            if (oldComponentDidMount) {
+                oldComponentDidMount();
+            }
+        };
+
+        var oldComponentDidUpdate = classDef.componentDidUpdate;
+        classDef.componentDidUpdate = function() {
+            _autoAdvance.call(this);
+            if (oldComponentDidUpdate) {
+                oldComponentDidUpdate();
+            }
+        };
+
+        return classDef;
+    };
 
     var GameOverNode = function() {};
 
@@ -33,21 +61,12 @@ var React = require("../lib/react-0.13.3.js");
         return {"NEXT": this.nextId};
     };
 
-    RecvTextNode.prototype.View = React.createFactory(React.createClass({
-        render: function() {
-            return <div>{this.props.node.text}</div>;
-        },
-
-        componentDidMount: function() {
-            // If we're the currently active node, wait the desired number of
-            // seconds and then automatically advance
-            if (this.props.nextNode === null) {
-                window.setTimeout(function() {
-                    this.props.advanceCallback("NEXT");
-                }.bind(this), 1000 * this.props.node.nextTime);
-            }
-        }
-    }));
+    RecvTextNode.prototype.View = React.createFactory(React.createClass(
+        AutoAdvanceMixin({
+            render: function() {
+                return <div>{this.props.node.text}</div>;
+            },
+        })));
 
     var SendTextNode = function(text, nextId, className, nextTime) {
         this.text = text;
@@ -77,21 +96,12 @@ var React = require("../lib/react-0.13.3.js");
         return {"NEXT": this.nextId};
     };
 
-    RecvImageNode.prototype.View = React.createFactory(React.createClass({
-        render: function() {
-            return <div><img src={this.props.node.src} width={300} /></div>;
-        },
-
-        componentDidMount: function() {
-            // If we're the currently active node, wait the desired number of
-            // seconds and then automatically advance
-            if (this.props.nextNode === null) {
-                window.setTimeout(function() {
-                    this.props.advanceCallback("NEXT");
-                }.bind(this), 1000 * this.props.node.nextTime);
-            }
-        }
-    }));
+    RecvImageNode.prototype.View = React.createFactory(React.createClass(
+        AutoAdvanceMixin({
+            render: function() {
+                return <div><img src={this.props.node.src} width={300} /></div>;
+            },
+        })));
 
     SendImageNode = function(src, nextId, className, nextTime) {
         this.src = src;
@@ -224,6 +234,10 @@ var React = require("../lib/react-0.13.3.js");
                     this.props.advanceCallback(validChoices[0][0]);
                 }.bind(this), 1000);
             }
+        },
+
+        componentDidUpdate: function() {
+            this.componentDidMount();
         }
     }));
 
@@ -244,7 +258,9 @@ var React = require("../lib/react-0.13.3.js");
 
         componentDidMount: function() {
             // Send a special message to jump to the last choice node
-            this.props.saveAndReturnCallback(this.props.node.choiceNode);
+            if (this.props.nextNode === null) {
+                this.props.saveAndReturnCallback(this.props.node.choiceNode);
+            }
         }
     }));
 
