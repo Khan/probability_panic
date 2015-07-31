@@ -1,7 +1,12 @@
 var Nodes = require("../build/nodes.js");
 var GAME_TREE = {
-    // Jesse says hi
     "START": new Nodes.RecvText(
+        "Monday, 5:43 PM",
+        "MON.START.HELLO",
+        "info", 0),
+    
+    // Jesse says hi
+    "MON.START.HELLO": new Nodes.RecvText(
         "Hey, cousin! 😊",
         "MON.START.RESPONSE"),
 
