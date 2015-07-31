@@ -12,41 +12,42 @@
         },
 
         render: function() {
-            var nodesToRender = [];
+            var instsToRender = [];
             var outputElements = [];
-            var currentNode = this.props.tree[this.state.activeNode];
-            if (!currentNode) {
+            var currentInst = this.props.tree[this.state.activeNode];
+            if (!currentInst) {
                 return <div>ERROR: Cannot find active node!</div>;
             }
 
             // Traverse up the tree back to the START node
-            while (currentNode) {
-                nodesToRender.push(currentNode);
-                currentNode = this.props.tree[currentNode.parentInst];
+            while (currentInst) {
+                instsToRender.push(currentInst);
+                currentInst = currentInst.parent;
             }
 
             // Render in reverse order (from START to activeNode)
-            for (var idx = nodesToRender.length - 1; idx >= 0; idx -= 1) {
-                var el = nodesToRender[idx].node.View({
-                    node: nodesToRender[idx].node,
+            for (var idx = instsToRender.length - 1; idx >= 0; idx -= 1) {
+                var el = instsToRender[idx].node.View({
+                    inst: instsToRender[idx],
+                    node: instsToRender[idx].node,
                     advanceCallback: this.advanceToNextNode,
-                    nextNode: (idx > 0 ? nodesToRender[idx - 1].id : null)
+                    nextNode: (idx > 0 ? instsToRender[idx - 1].id : null)
                 }, []);
                 outputElements.push(
-                    <li key={nodesToRender[idx].node.id}>{el}</li>);
+                    <li key={instsToRender[idx].node.id}>{el}</li>);
             }
 
             return <ol>{outputElements}</ol>;
         },
 
         advanceToNextNode: function(nextNode) {
-            var currentNode = this.props.tree[this.state.activeNode];
-            if (!currentNode) {
+            var currentInst = this.props.tree[this.state.activeNode];
+            if (!currentInst) {
                 return;
             }
 
             this.setState({
-                activeNode: currentNode.nextNodes[nextNode]
+                activeNode: currentInst.nextNodes[nextNode]
             });
         }
     });

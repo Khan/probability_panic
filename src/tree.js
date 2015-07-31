@@ -4,14 +4,18 @@ window.GAME_TREE = Nodes.instantiateTree({
         "CHOICE"),
     "CHOICE": new Nodes.SendChoice([
             {label: "Yes", nextNode: "GREAT"},
-            {label: "No", nextNode: "THANKS"}
+            {label: "Maybe", nextNode: "CHOICE.MAYBE"},
+            {label: "No", nextNode: "CHOICE.NO"}
         ]),
     "GREAT": new Nodes.RecvText(
         "Great! Thank you so much!",
         "END"),
-    "THANKS": new Nodes.RecvText(
-        "OK. Thanks anyway.",
-        "END"),
+    "CHOICE.MAYBE": new Nodes.RecvText(
+        "Will you do it for a snickers bar?",
+        "CHOICE"),
+    "CHOICE.NO": new Nodes.RecvText(
+        "Are you sure?",
+        "CHOICE"),
     "END": new Nodes.GameOver()
 });
 

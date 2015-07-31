@@ -40,17 +40,56 @@
         this.choices = choices;
     };
 
-    SendChoiceNode.prototype.getNextNodes = function() {
-        // TODO(tom) - Need to handle this better if we have the same
-        // next node twice
+    SendChoiceNode.prototype.getNextNodes = function(id, parentList) {
         var nextNodes = [];
         for (var idx = 0; idx < this.choices.length; idx++) {
-            nextNodes.push(this.choices[idx].nextNode);
+            var found = false;
+            for (var parentIdx = 0; parentIdx < parentList.length;
+                    parentIdx++) {
+                if (parentList[parentIdx][0] === id &&
+                    parentIdx < parentList.length - 1 &&
+                    parentList[parentIdx+1][0] ===
+                        this.choices[idx].nextNode) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                nextNodes.push(this.choices[idx].nextNode);
+            }
         };
         return nextNodes;
     }
 
     SendChoiceNode.prototype.View = React.createFactory(React.createClass({
+        getValidChoices: function() {
+            var validChoices = [];
+            for (idx = 0; idx < this.props.node.choices.length; idx++) {
+                var choice = this.props.node.choices[idx];
+                
+                // Has the user already selected this choice?
+                var parentInst = this.props.inst.parent;
+                var parentNextId = null;
+                var found = false;
+                while (parentInst) {
+                    if (parentInst.id === this.props.inst.id &&
+                        parentNextId === choice.nextNode) {
+                        found = true;
+                        break;
+                    }
+
+                    parentNextId = parentInst.id;
+                    parentInst = parentInst.parent;
+                }
+                if (found) {
+                    continue;
+                }
+
+                validChoices.push(choice);
+            }
+            return validChoices;
+        },
+
         render: function() {
             var idx;
 
@@ -68,11 +107,15 @@
             }
 
             var choiceElements = [];
-            for (idx = 0; idx < this.props.node.choices.length; idx++) {
-                var choice = this.props.node.choices[idx];
+            var validChoices = this.getValidChoices();
+
+            for (var idx = 0; idx < validChoices.length; idx++) {
+                var choice = validChoices[idx];
+
                 var cb = (function(cb, next) {
                     return function() { cb(next); };
                 })(this.props.advanceCallback, choice.nextNode);
+
                 choiceElements.push(
                     <button onClick={cb} key={choice.nextNode}>
                         {choice.label}
@@ -82,11 +125,20 @@
             return <div>
                 {choiceElements}
             </div>;
+        },
+
+        componentDidMount: function() {
+            // If there is only one valid choice (the others have already
+            // been selected) then just advance automatically
+            var validChoices = this.getValidChoices();
+            if (validChoices.length === 1) {
+                this.props.advanceCallback(validChoices[0].nextNode);
+            }
         }
     }));
 
     // Create a unique instance of a node in the output pool
-    var _instantiateNode = function(id, parentInst, nodeTree, outputPool) {
+    var _instantiateNode = function(id, parentList, nodeTree, outputPool) {
         var node = nodeTree[id];
 
         // Find an available instance # for this node
@@ -99,16 +151,19 @@
         outputPool[[id, instanceNum]] = {
             id: id,
             node: node,
-            parentInst: parentInst,
+            parent: outputPool[parentList[parentList.length - 1]],
             nextNodes: {},
         };
 
         // Recurse with each of the next nodes, creating a unique instance for
         // each one
-        var nextNodes = node.getNextNodes();
+        var nextNodes = node.getNextNodes(id, parentList);
         for (var idx = 0; idx < nextNodes.length; idx++) {
+            var newParentList = parentList.slice();
+            newParentList.push([id, instanceNum])
+
             var nextInstanceId = _instantiateNode(
-                nextNodes[idx], [id, instanceNum], nodeTree, outputPool);
+                nextNodes[idx], newParentList, nodeTree, outputPool);
 
             outputPool[[id, instanceNum]].nextNodes[nextNodes[idx]] = (
                     nextInstanceId);
@@ -121,7 +176,7 @@
     // the START node and traversing down
     var instantiateTree = function(nodeTree) {
         var outputPool = {};
-        _instantiateNode("START", null, nodeTree, outputPool);
+        _instantiateNode("START", [], nodeTree, outputPool);
         return outputPool;
     };
 
