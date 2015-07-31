@@ -4,6 +4,12 @@
 // TODO(tom): Final score/badges/etc.?
 // TODO(tom): Use actual KA avatar if available?
 // TODO(tom): Nicer-looking fonts
+// TODO(eli): Let multiple choices go to the same place
+// TODO(eli): Add a wait in between days
+// TODO(eli): Add animations
+// TODO(eli): Add emoji/escaping
+// TODO(eli): Add images
+// TODO(eli): Add to ka.org
 
 (function() {
     var ChatView = React.createClass({
