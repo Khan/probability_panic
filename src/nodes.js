@@ -47,7 +47,9 @@
         this.choices = choices;
     };
 
-    SendChoiceNode.prototype.getClassName = function() { return "right"; };
+    SendChoiceNode.prototype.getClassName = function(props) {
+        return props.nextNode ? "right" : "choice";
+    };
 
     SendChoiceNode.prototype.getNextNodes = function(id, parentList) {
         var nextNodes = [];
@@ -129,6 +131,7 @@
                     <button onClick={cb} key={choice.nextNode}>
                         {choice.label}
                     </button>);
+                choiceElements.push(<br />);
             }
 
             return <div>

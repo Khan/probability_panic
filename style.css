@@ -99,7 +99,8 @@ body {
     margin-left: 48px;
     margin-right: 68px;
 }
-.chat-container .bubble.right {
+.chat-container .bubble.right,
+.chat-container .bubble.choice {
     margin-left: 68px;
     margin-right: 48px;
     text-align: right;
@@ -114,8 +115,27 @@ body {
 .chat-container .bubble.left div {
     background-color: #f2dafb;
 }
-.chat-container .bubble.right div {
+.chat-container .bubble.right div,
+.chat-container .bubble.choice div {
     background-color: #beddff;
+}
+
+@-webkit-keyframes greenPulse {
+  from { background-color: #beddff; -webkit-box-shadow: 0 0 9px #888; }
+  50% { background-color: #50a5e7; -webkit-box-shadow: 0 0 18px #22ccfd; }
+  to { background-color: #beddff; -webkit-box-shadow: 0 0 9px #888; }
+}
+.chat-container .bubble.choice div {
+  -webkit-animation-name: greenPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+}
+
+.chat-container .bubble button {
+    display: inline-block;
+    font-size: 14px;
+    margin: 2px 0;
+    text-align: left;
 }
 
 .chat-container .arrow.left:before,
@@ -244,7 +264,8 @@ body {
     background: #fff url("https://www.khanacademy.org/images/avatars/duskpin-sapling.png") no-repeat top left;
     background-size: 36px 36px;
 }
-.chat-container .avatar.right {
+.chat-container .avatar.right,
+.chat-container .avatar.choice {
     right: 0;
     background: #fff url("https://www.khanacademy.org/images/avatars/mr-pink-blue.png") no-repeat top left;
     background-size: 36px 36px;

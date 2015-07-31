@@ -28,7 +28,7 @@
                     advanceCallback: this.props.advanceCallback,
                     nextNode: (idx > 0 ? instsToRender[idx - 1].id : null)
                 }, []);
-                var cls = instsToRender[idx].node.getClassName();
+                var cls = instsToRender[idx].node.getClassName(el.props);
                 outputElements.push(
                     <li key={instsToRender[idx].node.id}>
                       <div className={"arrow " + cls}></div>
