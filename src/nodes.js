@@ -39,7 +39,13 @@ var React = require("../lib/react-0.13.3.js");
 
     GameOverNode.prototype.View = React.createFactory(React.createClass({
         render: function() {
-            return <div>Game over</div>;
+            return <div>
+                <div>Game over</div>
+                <button onClick={this.props.restartCallback}
+                        className="play-again">
+                    Play again
+                </button>
+            </div>;
         }
     }));
 

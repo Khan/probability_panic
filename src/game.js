@@ -121,6 +121,9 @@
                     node: instsToRender[idx].node,
                     advanceCallback: this.props.advanceCallback,
                     saveAndReturnCallback: this.props.saveAndReturnCallback,
+                    restartCallback: function() {
+                        stateStore.restartGame();
+                    },
                     nextNode: (idx > 0 ? instsToRender[idx - 1] : null),
                     getParent: function(inst, context) {
                         return getInstanceParent(inst, context);

@@ -299,3 +299,7 @@ body {
     background: #fff url("https://www.khanacademy.org/images/avatars/mr-pink-blue.png") no-repeat top left;
     background-size: 36px 36px;
 }
+
+.chat-container .bubble .play-again {
+    display: block;
+}
