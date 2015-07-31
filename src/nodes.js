@@ -49,6 +49,16 @@ var React = require("../lib/react-0.13.3.js");
         }
     }));
 
+    var SendTextNode = function(text, nextId, className, nextTime) {
+        this.text = text;
+        this.nextId = nextId;
+        this.className = className || "right";
+        // Next time defaults to 1 second
+        this.nextTime = (nextTime === undefined) ? 1 : nextTime;
+    };
+
+    SendTextNode.prototype = Object.create(RecvTextNode.prototype, {})
+
     RecvImageNode = function(src, nextId, className, nextTime) {
         this.src = src;
         this.nextId = nextId;
@@ -82,6 +92,16 @@ var React = require("../lib/react-0.13.3.js");
             }
         }
     }));
+
+    SendImageNode = function(src, nextId, className, nextTime) {
+        this.src = src;
+        this.nextId = nextId;
+        this.className = className || "right";
+        // Next time defaults to 1 second
+        this.nextTime = (nextTime === undefined) ? 1 : nextTime;
+    };
+
+    SendImageNode.prototype = Object.create(RecvImageNode.prototype, {})
 
     var SendChoiceNode = function(choices) {
         // List of choice objects. Each choice looks like:
@@ -231,7 +251,9 @@ var React = require("../lib/react-0.13.3.js");
     module.exports = {
         GameOver: GameOverNode,
         RecvText: RecvTextNode,
+        SendText: SendTextNode,
         RecvImage: RecvImageNode,
+        SendImage: SendImageNode,
         SendChoice: SendChoiceNode,
         ReturnToChoice: ReturnToChoiceNode
     };

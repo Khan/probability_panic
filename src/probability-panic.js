@@ -31,9 +31,9 @@ var GAME_TREE = {
         "MON.START.RESPONSE"),
 
     // Say hi back to Jesse
-    "MON.START.RESPONSE": new Nodes.SendChoice([
-        {label: "Hey, Jesse! What's new since I saw you?",
-        nextNode: "MON.JESSE.NEW"}]),
+    "MON.START.RESPONSE": new Nodes.SendText(
+        "Hey, Jesse! What's new since I saw you?",
+        "MON.JESSE.NEW"),
 
     // Jesse's update on life
     "MON.JESSE.NEW": new Nodes.RecvText(
@@ -102,13 +102,13 @@ var GAME_TREE = {
 
 
     // Wrap up conversation and redirect to choices
-    "MON.SCHOOL.RESPONSE3a": new Nodes.SendChoice([
-            {label: "Well, good. Stay strong 💕",
-            nextNode: "MON.SCHOOL.RESPONSE3b"}]),
+    "MON.SCHOOL.RESPONSE3a": new Nodes.SendText(
+            "Well, good. Stay strong 💕",
+            "MON.SCHOOL.RESPONSE3b"),
 
-    "MON.SCHOOL.RESPONSE3b": new Nodes.SendChoice([
-            {label: "I’m always here for you, cuz, no matter what.",
-            nextNode: "MON.CONVERSATION.CHOICE.RETURN"}]),
+    "MON.SCHOOL.RESPONSE3b": new Nodes.SendText(
+            "I’m always here for you, cuz, no matter what.",
+            "MON.CONVERSATION.CHOICE.RETURN"),
 
 
     /**
@@ -141,10 +141,9 @@ var GAME_TREE = {
         "MON.FUN.RESPONSE1"),
 
     // Ask second followup
-    "MON.FUN.RESPONSE1": new Nodes.SendChoice([
-            {label: "I love Alice in Wonderland. Have you ever read it?",
-            nextNode: "MON.FUN2a"}
-            ]),
+    "MON.FUN.RESPONSE1": new Nodes.SendText(
+        "I love Alice in Wonderland. Have you ever read it?",
+        "MON.FUN2a"),
 
     // Jesse's afraid of cats, apparently
     "MON.FUN2a": new Nodes.RecvText(
@@ -155,16 +154,16 @@ var GAME_TREE = {
         "MON.FUN.RESPONSE3a"),
 
     // Ask MORE THINGS
-    "MON.FUN.RESPONSE3a": new Nodes.SendChoice([
-            {label: "You mean this cat?",
-            nextNode: "MON.FUN.RESPONSE3b"}]),
+    "MON.FUN.RESPONSE3a": new Nodes.SendText(
+        "You mean this cat?",
+        "MON.FUN.RESPONSE3b"),
 
-    "MON.FUN.RESPONSE3b": new Nodes.RecvImage(
-            "/images/cheshire-cat.jpg", "MON.FUN.RESPONSE3c", "right"),
+    "MON.FUN.RESPONSE3b": new Nodes.SendImage(
+            "/images/cheshire-cat.jpg", "MON.FUN.RESPONSE3c"),
 
-    "MON.FUN.RESPONSE3c": new Nodes.SendChoice([
-            {label: "What part did you try out for?",
-            nextNode: "MON.FUN3a"}]),
+    "MON.FUN.RESPONSE3c": new Nodes.SendText(
+        "What part did you try out for?",
+        "MON.FUN3a"),
 
     // Um apparently not that many parts are gender neutral?
     // Jesse's afraid of cats, apparently
@@ -179,9 +178,9 @@ var GAME_TREE = {
         "MON.FUN.RESPONSE4"),
 
     // Jesse's a weirdo. Time to wrap this up.
-    "MON.FUN.RESPONSE4": new Nodes.SendChoice([
-            {label: "lol",
-            nextNode: "MON.CONVERSATION.CHOICE.RETURN"}]),
+    "MON.FUN.RESPONSE4": new Nodes.SendText(
+        "lol",
+        "MON.CONVERSATION.CHOICE.RETURN"),
 
 
     /**
@@ -196,15 +195,15 @@ var GAME_TREE = {
         "MON.CITY.RESPONSEa"),
 
     // Ask followup question
-    "MON.CITY.RESPONSEa": new Nodes.SendChoice([
-            {label: "Well, at least you get to be somewhere different, see somewhere new.",
-            nextNode: "MON.CITY.RESPONSEb"}]),
-    "MON.CITY.RESPONSEb": new Nodes.SendChoice([
-            {label: "I can’t wait to move to the city after I finish my senior year.",
-            nextNode: "MON.CITY.RESPONSEc"}]),
-    "MON.CITY.RESPONSEc": new Nodes.SendChoice([
-            {label: "Then we can go back to Monday Movies. Just like the old days.",
-            nextNode: "MON.CITY1"}]),
+    "MON.CITY.RESPONSEa": new Nodes.SendText(
+        "Well, at least you get to be somewhere different, see somewhere new.",
+        "MON.CITY.RESPONSEb"),
+    "MON.CITY.RESPONSEb": new Nodes.SendText(
+        "I can’t wait to move to the city after I finish my senior year.",
+        "MON.CITY.RESPONSEc"),
+    "MON.CITY.RESPONSEc": new Nodes.SendText(
+        "Then we can go back to Monday Movies. Just like the old days.",
+        "MON.CITY1"),
 
     // Jesse's second response
     "MON.CITY1": new Nodes.RecvText(
@@ -212,10 +211,9 @@ var GAME_TREE = {
         "MON.CITY.RESPONSE1"),
 
     // Ask second followup
-    "MON.CITY.RESPONSE1": new Nodes.SendChoice([
-            {label: "I miss you too, Jess. It sucks not having my spunky canoe-paddling minion around. I’ve had to switch to kayaking. The horror!",
-            nextNode: "MON.CITY2a"}
-            ]),
+    "MON.CITY.RESPONSE1": new Nodes.SendText(
+        "I miss you too, Jess. It sucks not having my spunky canoe-paddling minion around. I’ve had to switch to kayaking. The horror!",
+        "MON.CITY2a"),
 
     // Jesse's afraid of cats, apparently
     "MON.CITY2a": new Nodes.RecvText(
@@ -226,9 +224,9 @@ var GAME_TREE = {
         "MON.CITY.RESPONSE3a"),
 
     // Ask MORE THINGS
-    "MON.CITY.RESPONSE3a": new Nodes.SendChoice([
-            {label: "Well, I can't wait to visit and you can show me the good stuff, and what smells to avoid.",
-            nextNode: "MON.CONVERSATION.CHOICE.RETURN"}]),
+    "MON.CITY.RESPONSE3a": new Nodes.SendText(
+        "Well, I can't wait to visit and you can show me the good stuff, and what smells to avoid.",
+        "MON.CONVERSATION.CHOICE.RETURN"),
 
 
     /**
