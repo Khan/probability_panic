@@ -13,15 +13,17 @@
     var Nodes = require("../build/nodes.js");
 
     var stateStore = new (function(tree) {
-        this.state = {
-            activeNode: (sessionStorage.activeNode ? 
-                         sessionStorage.activeNode.split(":") : ["START", 1]),
-            // TODO(tom) Load this from session storage as well
-            choices: {}
-        };
+        var snapshot = sessionStorage.gameState;
+        if (snapshot) {
+            this.state = JSON.parse(snapshot);
+        }
 
-        if (!tree[this.state.activeNode]) {
-            this.state.activeNode = ["START", 1];
+        if (!snapshot || !tree[this.state.activeNode]) {
+            // Reset state
+            this.state = {
+                activeNode: ["START", 1],
+                choices: {}
+            };
         }
 
         this.listenerComponent = null;
@@ -37,7 +39,7 @@
             }
 
             this.state.activeNode = currentInst.nextNodes[nextNode];
-            sessionStorage.activeNode = this.state.activeNode.join(":");
+            this.saveSession();
 
             this.listenerComponent.forceUpdate();
         };
@@ -68,7 +70,8 @@
 
             this.state.activeNode = [
                 lastChoiceInst.id, lastChoiceInst.instNum];
-            sessionStorage.activeNode = this.state.activeNode.join(":");
+
+            this.saveSession();
 
             this.listenerComponent.forceUpdate();
         };
@@ -76,12 +79,15 @@
         this.restartGame = function() {
             this.state = {
                 activeNode: ["START", 1],
-                // TODO(tom) Load this from session storage as well
                 choices: {}
             };
-            sessionStorage.activeNode = this.state.activeNode.join(":");
+            this.saveSession();
 
             this.listenerComponent.forceUpdate();
+        };
+
+        this.saveSession = function() {
+            sessionStorage.gameState = JSON.stringify(this.state);
         };
     })(GAME_TREE);
 
