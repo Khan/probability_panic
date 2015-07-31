@@ -1,12 +1,11 @@
-<<<<<<< HEAD
 var Nodes = require("../build/nodes.js");
-var GAME_TREE = {
-=======
+
+
+
 // Being at some nodes means that the player has just done something
 // mean or nice or promoting of growth mindset or w/e.
 // We want to be able to count this stuff at the end of the game so we
 // keep track of which nodes caused what states here.
-
 var NODE_TYPES = {
     "MEAN": ["MON.HOMEWORK.OFFENDEDa",
              "MON.HOMEWORK.OFFENDEDb"],
@@ -18,9 +17,9 @@ var NODE_TYPES = {
     "FIXED_MINDSET": ["MON.HOMEWORK.ELABORATEa"],
 }
 
-window.GAME_TREE = Nodes.instantiateTree({
-    // Jesse says hi
->>>>>>> Add more story and more TODOs
+
+var GAME_TREE = {
+
     "START": new Nodes.RecvText(
         "Monday, 5:43 PM",
         "MON.START.HELLO",
@@ -46,11 +45,7 @@ window.GAME_TREE = Nodes.instantiateTree({
         "MON.JESSE.NEW2"),
 
     "MON.JESSE.NEW2": new Nodes.RecvText(
-<<<<<<< HEAD
         "I can’t talk too long. I already have homework. 😞",
-=======
-        "Things are sort of hard. I already have homework. :(",
->>>>>>> Add more story and more TODOs
         "MON.CONVERSATION.CHOICE"),
 
     // Conversation loop to ask about Jesse's life
@@ -153,11 +148,7 @@ window.GAME_TREE = Nodes.instantiateTree({
         "No, but I’ve been meaning to get around to it! I heard it has cool illustrations?",
         "MON.FUN2b"),
     "MON.FUN2b": new Nodes.RecvText(
-<<<<<<< HEAD
         "But that cat has always sort of creeped me out 😒",
-=======
-        "But that cat has always sort of creeped me out. :/",
->>>>>>> Add more story and more TODOs
         "MON.FUN.RESPONSE3a"),
 
     // Ask MORE THINGS
@@ -319,7 +310,7 @@ window.GAME_TREE = Nodes.instantiateTree({
         {label: "I was wondering where you were the past couple days.",
         nextNode: "WED.JESSE.QUIZa"},
         {label: "Oh no! What happened?",
-        nextNode: "WED.JESSE.QUIZ"}]]),
+        nextNode: "WED.JESSE.QUIZ"}]),
 
 
     "WED.JESSE.QUIZa": new Nodes.RecvText(
@@ -351,7 +342,7 @@ window.GAME_TREE = Nodes.instantiateTree({
         {label: "I'll get back to you in a few days.",
         nextNode: "END"},
         {label: "At the end of this awesome hackathon!",
-        nextNode: "END"}]]),
+        nextNode: "END"}]),
 
 
 
