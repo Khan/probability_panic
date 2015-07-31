@@ -110,11 +110,14 @@ var GAME_TREE = {
 
     // Ask MORE THINGS
     "MON.FUN.RESPONSE3a": new Nodes.SendChoice([
-            {label: "You mean this cat? [picture of cat]",
+            {label: "You mean this cat?",
             nextNode: "MON.FUN.RESPONSE3b"}]),
 
-    "MON.FUN.RESPONSE3b": new Nodes.SendChoice([
-            {label: "What part did you try out for?.",
+    "MON.FUN.RESPONSE3b": new Nodes.RecvImage(
+            "/images/cheshire-cat.jpg", "MON.FUN.RESPONSE3c", "right"),
+
+    "MON.FUN.RESPONSE3c": new Nodes.SendChoice([
+            {label: "What part did you try out for?",
             nextNode: "MON.FUN3a"}]),
 
     // Um apparently not that many parts are gender neutral?
@@ -170,7 +173,7 @@ var GAME_TREE = {
 
     // Jesse's afraid of cats, apparently
     "MON.CITY2a": new Nodes.RecvText(
-        "The city stinks almost as bad as your canoe steering abilities :P.",
+        "The city stinks almost as bad as your canoe steering abilities 😷.",
         "MON.CITY2b"),
     "MON.CITY2b": new Nodes.RecvText(
         "Kidding, you’re the best. But this city really does smell like … well, we’re nice, so let’s just say it doesn’t smell like fresh grass. At all.",
@@ -213,7 +216,7 @@ var GAME_TREE = {
 
     // Jesse's second response
     "MON.HOMEWORK.RESPONSE1": new Nodes.SendChoice([
-            {label: "Well, PROBABLY you'll get probability. :P. Get it?",
+            {label: "Well, PROBABLY you'll get probability. 😜. Get it?",
             nextNode: "MON.CONVERSATION.CHOICE"},
             {label: "What part do you not understand?",
             nextNode: "MON.HOMEWORK.ELABORATE1"}]),

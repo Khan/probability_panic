@@ -25,8 +25,8 @@ var React = require("../lib/react-0.13.3.js");
 
     RecvTextNode.prototype.type = "RecvText";
 
-    RecvTextNode.prototype.getClassName = function() {
-        return this.className;
+    RecvTextNode.prototype.getClassName = function(props) {
+        return props.node.className;
     };
 
     RecvTextNode.prototype.getNextNodes = function() { return [this.nextId]; };
@@ -34,6 +34,38 @@ var React = require("../lib/react-0.13.3.js");
     RecvTextNode.prototype.View = React.createFactory(React.createClass({
         render: function() {
             return <div>{this.props.node.text}</div>;
+        },
+
+        componentDidMount: function() {
+            // If we're the currently active node, wait the desired number of
+            // seconds and then automatically advance
+            if (this.props.nextNode === null) {
+                window.setTimeout(function() {
+                    this.props.advanceCallback(this.props.node.nextId);
+                }.bind(this), 1000 * this.props.node.nextTime);
+            }
+        }
+    }));
+
+    RecvImageNode = function(src, nextId, className, nextTime) {
+        this.src = src;
+        this.nextId = nextId;
+        this.className = className || "left";
+        // Next time defaults to 1 second
+        this.nextTime = (nextTime === undefined) ? 1 : nextTime;
+    };
+
+    RecvImageNode.prototype.type = "RecvImage";
+
+    RecvImageNode.prototype.getClassName = function(props) {
+        return props.node.className;
+    };
+
+    RecvImageNode.prototype.getNextNodes = function() { return [this.nextId]; };
+
+    RecvImageNode.prototype.View = React.createFactory(React.createClass({
+        render: function() {
+            return <div><img src={this.props.node.src} width={300} /></div>;
         },
 
         componentDidMount: function() {
@@ -166,6 +198,7 @@ var React = require("../lib/react-0.13.3.js");
     module.exports = {
         GameOver: GameOverNode,
         RecvText: RecvTextNode,
+        RecvImage: RecvImageNode,
         SendChoice: SendChoiceNode
     };
 })();

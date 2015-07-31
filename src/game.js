@@ -6,7 +6,6 @@
 // TODO(eli): Let multiple choices go to the same place
 // TODO(eli): Add a wait in between days
 // TODO(eli): Add animations
-// TODO(eli): Add images
 // TODO(eli): Add to ka.org
 
 (function() {
