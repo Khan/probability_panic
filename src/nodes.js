@@ -203,7 +203,7 @@ var React = require("../lib/react-0.13.3.js");
 
                 choiceElements.push(
                     <button onClick={cb} key={idx}>{choice.label}</button>);
-                choiceElements.push(<br />);
+                choiceElements.push(<br key={idx + "B"} />);
             }
 
             return <div>

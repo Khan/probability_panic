@@ -128,7 +128,7 @@
                 }, []);
                 var cls = nodeClass.prototype.getClassName(el.props);
                 outputElements.push(
-                    <li key={instsToRender[idx].node.id}>
+                    <li key={idx}>
                       <div className={"arrow " + cls}></div>
                       <div className={"bubble " + cls}>{el}</div>
                       <div className={"avatar " + cls}></div>
