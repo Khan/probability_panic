@@ -1,0 +1,251 @@
+body {
+    margin: 0;
+}
+
+.game-window {
+    background-color: #fff;
+    height: 100%;
+    margin: 0;
+    position: absolute;
+    width: 100%;
+}
+
+.chat-window {
+    background-color: #ccc;
+    border-radius: 5px;
+    bottom: 10px;
+    box-shadow: 3px 3px 8px #777;
+    height: 70%;
+    position: absolute;
+    right: 10px;
+    width: 500px;
+}
+
+.chat-header {
+    padding: 2px 4px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+}
+
+.chat-header .button {
+    border-radius: 5px;
+    box-shadow: inset 0 0 2px #111;
+    display: inline-block;
+    height: 10px;
+    margin: 3px;
+    width: 10px;
+}
+
+.chat-header .btn1 {
+    background-color: #f44;
+}
+.chat-header .btn2 {
+    background-color: #fe4;
+}
+.chat-header .btn3 {
+    background-color: #7f4;
+}
+
+.chat-header .title {
+    font-size: 12px;
+    left: 0;
+    line-height: 20px;
+    position: absolute;
+    right: 9px;
+    text-align: center;
+    top: 0;
+}
+
+.chat-body {
+    background-color: #fff;
+    bottom: 10px;
+    box-shadow: 0px 0px 4px #666;
+    left: 0;
+    margin: 6px;
+    overflow-y: auto;
+    padding: 4px;
+    position: absolute;
+    right: 0;
+    top: 16px;
+}
+
+.chat-aligner {
+    display: inline-block;
+    height: 100%;
+    vertical-align: bottom;
+}
+
+.chat-container {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.chat-container li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.chat-container .bubble {
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 10;
+}
+.chat-container .bubble.left {
+    margin-left: 48px;
+    margin-right: 68px;
+}
+.chat-container .bubble.right {
+    margin-left: 68px;
+    margin-right: 48px;
+    text-align: right;
+}
+
+.chat-container .bubble div {
+    border-radius: 15px;
+    box-shadow: 0px 1px 2px #666;
+    display: inline-block;
+    padding: 10px;
+}
+.chat-container .bubble.left div {
+    background-color: #f2dafb;
+}
+.chat-container .bubble.right div {
+    background-color: #beddff;
+}
+
+.chat-container .arrow.left:before,
+.chat-container .arrow.left:after,
+.chat-container .bubble.left div:before,
+.chat-container .bubble.left div:after,
+.chat-container .arrow.right:before,
+.chat-container .arrow.right:after,
+.chat-container .bubble.right div:before,
+.chat-container .bubble.right div:after {
+	content: "";
+	position: absolute;
+}
+
+.chat-container .arrow.left:before,
+.chat-container .bubble.left div:before {
+	-webkit-border-bottom-right-radius: 80px 50px;
+	-moz-border-radius-bottomright: 80px 50px;
+	border-bottom-right-radius: 80px 50px;
+	height: 10px;
+	/* using translate to avoid undesired appearance in CSS2.1-capabable but CSS3-incapable browsers */
+	-webkit-transform: translate(0, -2px);
+	-moz-transform: translate(0, -2px);
+	-ms-transform: translate(0, -2px);
+	-o-transform: translate(0, -2px);
+	transform: translate(0, -2px);
+}
+.chat-container .arrow.left:before {
+	background: #bbb;
+	border-right: 30px solid #bbb;
+	bottom:-3px;
+    left: 30px;
+}
+.chat-container .bubble.left div:before {
+	background: #f2dafb;
+	bottom: -2px;
+	border-right: 30px solid #f2dafb;
+    left: -20px;
+}
+
+.chat-container .arrow.left:after,
+.chat-container .bubble.left div:after {
+	background: #fff;
+	-webkit-border-bottom-right-radius:40px 50px; 
+	-moz-border-radius-bottomright:40px 50px; 
+	border-bottom-right-radius:40px 50px; 
+	height: 10px;
+	/* using translate to avoid undesired appearance in CSS2.1-capabable but CSS3-incapable browsers */
+	-webkit-transform: translate(-10px, -2px);
+	-moz-transform: translate(-10px, -2px);
+	-ms-transform: translate(-10px, -2px);
+	-o-transform: translate(-10px, -2px);
+	transform: translate(-10px, -2px);
+	width: 30px;
+}
+.chat-container .arrow.left:after {
+	bottom: -3px;
+    left: 30px;
+}
+.chat-container .bubble.left div:after {
+	bottom: -2px;
+    left: -20px;
+	width: 30px;
+}
+
+.chat-container .arrow.right:before,
+.chat-container .bubble.right div:before {
+	-webkit-border-bottom-left-radius: 80px 50px;
+	-moz-border-radius-bottomleft: 80px 50px;
+	border-bottom-left-radius: 80px 50px;
+	height: 10px;
+	/* using translate to avoid undesired appearance in CSS2.1-capabable but CSS3-incapable browsers */
+	-webkit-transform: translate(0, -2px);
+	-moz-transform: translate(0, -2px);
+	-ms-transform: translate(0, -2px);
+	-o-transform: translate(0, -2px);
+	transform: translate(0, -2px);
+}
+.chat-container .arrow.right:before {
+	background: #bbb;
+	border-left: 30px solid #bbb;
+	bottom:-3px;
+    right: 30px;
+}
+.chat-container .bubble.right div:before {
+	background: #beddff;
+	bottom: -2px;
+	border-left: 30px solid #beddff;
+    right: -20px;
+}
+
+.chat-container .arrow.right:after,
+.chat-container .bubble.right div:after {
+	background: #fff;
+	-webkit-border-bottom-left-radius:40px 50px; 
+	-moz-border-radius-bottomleft:40px 50px; 
+	border-bottom-left-radius:40px 50px; 
+	height: 10px;
+	/* using translate to avoid undesired appearance in CSS2.1-capabable but CSS3-incapable browsers */
+	-webkit-transform: translate(10px, -2px);
+	-moz-transform: translate(10px, -2px);
+	-ms-transform: translate(10px, -2px);
+	-o-transform: translate(10px, -2px);
+	transform: translate(10px, -2px);
+	width: 30px;
+}
+.chat-container .arrow.right:after {
+	bottom: -3px;
+    right: 30px;
+}
+.chat-container .bubble.right div:after {
+	bottom: -2px;
+    right: -20px;
+	width: 30px;
+}
+
+.chat-container .avatar {
+    bottom: -5px;
+    height: 36px;
+    position: absolute;
+    width: 36px;
+    z-index: 100;
+}
+.chat-container .avatar.left {
+    left: 0;
+    background: #fff url("https://www.khanacademy.org/images/avatars/duskpin-sapling.png") no-repeat top left;
+    background-size: 36px 36px;
+}
+.chat-container .avatar.right {
+    right: 0;
+    background: #fff url("https://www.khanacademy.org/images/avatars/mr-pink-blue.png") no-repeat top left;
+    background-size: 36px 36px;
+}

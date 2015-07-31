@@ -1,6 +1,8 @@
 (function() {
     var GameOverNode = function() {};
 
+    GameOverNode.prototype.getClassName = function() { return null; };
+
     GameOverNode.prototype.getNextNodes = function() { return []; };
 
     GameOverNode.prototype.View = React.createFactory(React.createClass({
@@ -9,18 +11,23 @@
         }
     }));
 
-    var RecvTextNode = function(text, nextId, nextTime) {
+    var RecvTextNode = function(text, nextId, className, nextTime) {
         this.text = text;
         this.nextId = nextId;
+        this.className = className || "left";
         // Next time defaults to 1 second
         this.nextTime = nextTime || 1;
+    };
+
+    RecvTextNode.prototype.getClassName = function() {
+        return this.className;
     };
 
     RecvTextNode.prototype.getNextNodes = function() { return [this.nextId]; };
 
     RecvTextNode.prototype.View = React.createFactory(React.createClass({
         render: function() {
-            return <div>STUDENT: {this.props.node.text}</div>;
+            return <div>{this.props.node.text}</div>;
         },
 
         componentDidMount: function() {
@@ -39,6 +46,8 @@
         // { label: "...", nextNode: "..." }
         this.choices = choices;
     };
+
+    SendChoiceNode.prototype.getClassName = function() { return "right"; };
 
     SendChoiceNode.prototype.getNextNodes = function(id, parentList) {
         var nextNodes = [];
@@ -98,12 +107,12 @@
                 for (idx = 0; idx < this.props.node.choices.length; idx++) {
                     var choice = this.props.node.choices[idx];
                     if (choice.nextNode === this.props.nextNode) {
-                        return <div>YOU: {choice.label}</div>;
+                        return <div>{choice.label}</div>;
                     }
                 }
                     
                 // TODO(tom): Handle this error condition better?
-                return <div>YOU: ???</div>;
+                return <div>???</div>;
             }
 
             var choiceElements = [];
