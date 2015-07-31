@@ -7,7 +7,7 @@ var React = require("../lib/react-0.13.3.js");
 
     GameOverNode.prototype.getClassName = function() { return "info"; };
 
-    GameOverNode.prototype.getNextNodes = function() { return []; };
+    GameOverNode.prototype.getNextNodes = function() { return {}; };
 
     GameOverNode.prototype.View = React.createFactory(React.createClass({
         render: function() {
@@ -29,7 +29,9 @@ var React = require("../lib/react-0.13.3.js");
         return props.node.className;
     };
 
-    RecvTextNode.prototype.getNextNodes = function() { return [this.nextId]; };
+    RecvTextNode.prototype.getNextNodes = function() {
+        return {"NEXT": this.nextId};
+    };
 
     RecvTextNode.prototype.View = React.createFactory(React.createClass({
         render: function() {
@@ -41,7 +43,7 @@ var React = require("../lib/react-0.13.3.js");
             // seconds and then automatically advance
             if (this.props.nextNode === null) {
                 window.setTimeout(function() {
-                    this.props.advanceCallback(this.props.node.nextId);
+                    this.props.advanceCallback("NEXT");
                 }.bind(this), 1000 * this.props.node.nextTime);
             }
         }
@@ -61,7 +63,9 @@ var React = require("../lib/react-0.13.3.js");
         return props.node.className;
     };
 
-    RecvImageNode.prototype.getNextNodes = function() { return [this.nextId]; };
+    RecvImageNode.prototype.getNextNodes = function() {
+        return {"NEXT": this.nextId};
+    };
 
     RecvImageNode.prototype.View = React.createFactory(React.createClass({
         render: function() {
@@ -73,7 +77,7 @@ var React = require("../lib/react-0.13.3.js");
             // seconds and then automatically advance
             if (this.props.nextNode === null) {
                 window.setTimeout(function() {
-                    this.props.advanceCallback(this.props.node.nextId);
+                    this.props.advanceCallback("NEXT");
                 }.bind(this), 1000 * this.props.node.nextTime);
             }
         }
@@ -88,11 +92,11 @@ var React = require("../lib/react-0.13.3.js");
     SendChoiceNode.prototype.type = "SendChoice";
 
     SendChoiceNode.prototype.getClassName = function(props) {
-        return props.nextNode ? "right" : "choice";
+        return (props.nextNode === null) ? "right" : "choice";
     };
 
     SendChoiceNode.prototype.getNextNodes = function(id, parentList) {
-        var nextNodes = [];
+        var nextNodes = {};
         for (var idx = 0; idx < this.choices.length; idx++) {
             var found = false;
             for (var parentIdx = 0; parentIdx < parentList.length;
@@ -106,7 +110,7 @@ var React = require("../lib/react-0.13.3.js");
                 }
             }
             if (!found) {
-                nextNodes.push(this.choices[idx].nextNode);
+                nextNodes[idx] = this.choices[idx].nextNode;
             }
         };
         return nextNodes;
@@ -136,20 +140,25 @@ var React = require("../lib/react-0.13.3.js");
                     continue;
                 }
 
-                validChoices.push(choice);
+                validChoices.push([idx, choice]);
             }
             return validChoices;
         },
 
         render: function() {
             var idx;
+            var validChoices = this.getValidChoices();
 
             if (this.props.nextNode) {
                 // Find the choice that corresponds to the next node
-                for (idx = 0; idx < this.props.node.choices.length; idx++) {
-                    var choice = this.props.node.choices[idx];
-                    if (choice.nextNode === this.props.nextNode) {
-                        return <div>{choice.label}</div>;
+                for (idx = 0; idx < validChoices.length; idx++) {
+                    var choiceIdx = validChoices[idx][0];
+                    if (this.props.inst.nextNodes[choiceIdx] &&
+                        (this.props.inst.nextNodes[choiceIdx][0] ===
+                         this.props.nextNode.id) &&
+                        (this.props.inst.nextNodes[choiceIdx][1] ===
+                         this.props.nextNode.instNum)) {
+                        return <div>{validChoices[idx][1].label}</div>;
                     }
                 }
                     
@@ -158,19 +167,16 @@ var React = require("../lib/react-0.13.3.js");
             }
 
             var choiceElements = [];
-            var validChoices = this.getValidChoices();
 
             for (var idx = 0; idx < validChoices.length; idx++) {
-                var choice = validChoices[idx];
+                var choice = validChoices[idx][1];
 
                 var cb = (function(cb, next) {
                     return function() { cb(next); };
-                })(this.props.advanceCallback, choice.nextNode);
+                })(this.props.advanceCallback, validChoices[idx][0]);
 
                 choiceElements.push(
-                    <button onClick={cb} key={choice.nextNode}>
-                        {choice.label}
-                    </button>);
+                    <button onClick={cb} key={idx}>{choice.label}</button>);
                 choiceElements.push(<br />);
             }
 
@@ -189,7 +195,7 @@ var React = require("../lib/react-0.13.3.js");
             var validChoices = this.getValidChoices();
             if (validChoices.length === 1) {
                 window.setTimeout(function() {
-                    this.props.advanceCallback(validChoices[0].nextNode);
+                    this.props.advanceCallback(validChoices[0][0]);
                 }.bind(this), 1000);
             }
         }

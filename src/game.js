@@ -3,7 +3,6 @@
 // TODO(tom): Final score/badges/etc.?
 // TODO(tom): Use actual KA avatar if available?
 // TODO(tom): Nicer-looking fonts
-// TODO(eli): Let multiple choices go to the same place
 // TODO(eli): Add a wait in between days
 // TODO(eli): Add animations
 // TODO(eli): Add to ka.org
@@ -61,7 +60,7 @@
                     inst: instsToRender[idx],
                     node: instsToRender[idx].node,
                     advanceCallback: this.props.advanceCallback,
-                    nextNode: (idx > 0 ? instsToRender[idx - 1].id : null)
+                    nextNode: (idx > 0 ? instsToRender[idx - 1] : null)
                 }, []);
                 var cls = nodeClass.prototype.getClassName(el.props);
                 outputElements.push(

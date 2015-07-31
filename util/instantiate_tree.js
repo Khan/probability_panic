@@ -19,6 +19,7 @@ var instantiateNode = function(id, parentList, nodeTree, outputPool) {
     // Create the new instance
     outputPool[[id, instanceNum]] = {
         id: id,
+        instNum: instanceNum,
         node: node,
         nodeType: node.type,
         parentInst: parentList[parentList.length - 1],
@@ -28,15 +29,19 @@ var instantiateNode = function(id, parentList, nodeTree, outputPool) {
     // Recurse with each of the next nodes, creating a unique instance for
     // each one
     var nextNodes = node.getNextNodes(id, parentList);
-    for (var idx = 0; idx < nextNodes.length; idx++) {
-        var newParentList = parentList.slice();
-        newParentList.push([id, instanceNum])
+    for (var nextSelector in nextNodes) {
+        if (nextNodes.hasOwnProperty(nextSelector)) {
+            var nextNodeId = nextNodes[nextSelector];
 
-        var nextInstanceId = instantiateNode(
-            nextNodes[idx], newParentList, nodeTree, outputPool);
+            var newParentList = parentList.slice();
+            newParentList.push([id, instanceNum])
 
-        outputPool[[id, instanceNum]].nextNodes[nextNodes[idx]] = (
-                nextInstanceId);
+            var nextInstanceId = instantiateNode(
+                nextNodeId, newParentList, nodeTree, outputPool);
+
+            outputPool[[id, instanceNum]].nextNodes[nextSelector] = (
+                    nextInstanceId);
+        }
     }
 
     return [id, instanceNum];
