@@ -1,13 +1,13 @@
 (function() {
     var GameOverNode = function() {};
 
-    GameOverNode.prototype.getClassName = function() { return null; };
+    GameOverNode.prototype.getClassName = function() { return "info"; };
 
     GameOverNode.prototype.getNextNodes = function() { return []; };
 
     GameOverNode.prototype.View = React.createFactory(React.createClass({
         render: function() {
-            return <div>Game over!</div>;
+            return <div>Game over</div>;
         }
     }));
 
@@ -16,7 +16,7 @@
         this.nextId = nextId;
         this.className = className || "left";
         // Next time defaults to 1 second
-        this.nextTime = nextTime || 1;
+        this.nextTime = (nextTime === undefined) ? 1 : nextTime;
     };
 
     RecvTextNode.prototype.getClassName = function() {

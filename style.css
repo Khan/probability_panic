@@ -105,6 +105,9 @@ body {
     margin-right: 48px;
     text-align: right;
 }
+.chat-container .bubble.info {
+    text-align: center;
+}
 
 .chat-container .bubble div {
     border-radius: 15px;
@@ -118,6 +121,11 @@ body {
 .chat-container .bubble.right div,
 .chat-container .bubble.choice div {
     background-color: #beddff;
+}
+.chat-container .bubble.info div {
+    box-shadow: none;
+    color: #888;
+    font-size: 12px;
 }
 
 @-webkit-keyframes greenPulse {

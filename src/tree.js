@@ -1,5 +1,7 @@
 window.GAME_TREE = Nodes.instantiateTree({
     "START": new Nodes.RecvText(
+        "6:32pm", "NEXT", "info", 0),
+    "NEXT": new Nodes.RecvText(
         "Hello! Can you help me with my math homework?",
         "CHOICE"),
     "CHOICE": new Nodes.SendChoice([
