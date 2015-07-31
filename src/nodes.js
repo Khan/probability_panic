@@ -148,11 +148,17 @@ var React = require("../lib/react-0.13.3.js");
         },
 
         componentDidMount: function() {
+            if (this.props.nextNode) {
+                return;
+            }
+
             // If there is only one valid choice (the others have already
-            // been selected) then just advance automatically
+            // been selected) then just advance automatically after one second
             var validChoices = this.getValidChoices();
             if (validChoices.length === 1) {
-                this.props.advanceCallback(validChoices[0].nextNode);
+                window.setTimeout(function() {
+                    this.props.advanceCallback(validChoices[0].nextNode);
+                }.bind(this), 1000);
             }
         }
     }));

@@ -1,4 +1,3 @@
-// TODO(tom): Snapshot state at choice points
 // TODO(tom): Click a node to go back to that state
 // TODO(tom): Variables/flags/branching
 // TODO(tom): Final score/badges/etc.?
@@ -10,11 +9,35 @@
 // TODO(eli): Add images
 // TODO(eli): Add to ka.org
 
-var React = require("../lib/react-0.13.3.js");
-var GAME_TREE = require("../build/final_tree.js");
-var Nodes = require("../build/nodes.js");
-
 (function() {
+    var React = require("../lib/react-0.13.3.js");
+    var GAME_TREE = require("../build/final_tree.js");
+    var Nodes = require("../build/nodes.js");
+
+    var stateStore = new (function(tree) {
+        this.state = {
+            activeNode: (sessionStorage.activeNode ? 
+                         sessionStorage.activeNode.split(":") : ["START", 1])
+        };
+
+        this.listenerComponent = null;
+        this.registerComponent = function(component) {
+            this.listenerComponent = component;
+        };
+
+        this.advanceToNextNode = function(nextNode) {
+            var currentInst = tree[this.state.activeNode];
+            if (!currentInst) {
+                return;
+            }
+
+            this.state.activeNode = currentInst.nextNodes[nextNode];
+            sessionStorage.activeNode = this.state.activeNode.join(":");
+
+            this.listenerComponent.forceUpdate();
+        };
+    })(GAME_TREE);
+
     var ChatView = React.createClass({
         render: function() {
             var instsToRender = [];
@@ -56,30 +79,24 @@ var Nodes = require("../build/nodes.js");
             </div>;
         },
 
-        componentDidUpdate: function() {
+        scrollToBottom: function() {
             // Force the chat to scroll to the bottom
             var chatBody = React.findDOMNode(this);
             chatBody.scrollTop = 100000;
+        },
 
+        componentDidMount: function() {
+            this.scrollToBottom();
+        },
+
+        componentDidUpdate: function() {
+            this.scrollToBottom();
         }
     });
 
     var GameView = React.createClass({
-        getInitialState: function() {
-            return {
-                activeNode: ["START",1]
-            };
-        },
-
-        advanceToNextNode: function(nextNode) {
-            var currentInst = this.props.tree[this.state.activeNode];
-            if (!currentInst) {
-                return;
-            }
-
-            this.setState({
-                activeNode: currentInst.nextNodes[nextNode]
-            });
+        componentDidMount: function() {
+            stateStore.registerComponent(this);
         },
 
         render: function() {
@@ -92,8 +109,10 @@ var Nodes = require("../build/nodes.js");
                         <div className="title">Chat with Jesse</div>
                     </div>
                     <ChatView tree={this.props.tree}
-                        activeNode={this.state.activeNode}
-                        advanceCallback={this.advanceToNextNode} />
+                        activeNode={stateStore.state.activeNode}
+                        advanceCallback={function(nextNode) {
+                            stateStore.advanceToNextNode(nextNode);
+                        }} />
                 </div>
             </div>;
         }
