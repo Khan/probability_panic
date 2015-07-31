@@ -133,6 +133,9 @@ body {
     display: inline-block;
     padding: 10px;
 }
+.chat-container .bubble.hidden div {
+    display: none;
+}
 .chat-container .bubble.left div {
     background-color: #f2dafb;
 }

@@ -15,8 +15,14 @@
     var stateStore = new (function(tree) {
         this.state = {
             activeNode: (sessionStorage.activeNode ? 
-                         sessionStorage.activeNode.split(":") : ["START", 1])
+                         sessionStorage.activeNode.split(":") : ["START", 1]),
+            // TODO(tom) Load this from session storage as well
+            choices: {}
         };
+
+        if (!tree[this.state.activeNode]) {
+            this.state.activeNode = ["START", 1];
+        }
 
         this.listenerComponent = null;
         this.registerComponent = function(component) {
@@ -26,6 +32,7 @@
         this.advanceToNextNode = function(nextNode) {
             var currentInst = tree[this.state.activeNode];
             if (!currentInst) {
+                // TODO(tom) Handle error?
                 return;
             }
 
@@ -34,7 +41,52 @@
 
             this.listenerComponent.forceUpdate();
         };
+
+        this.saveAndReturn = function(choiceNode) {
+            // Jump back to the last choice node and add this terminal node to
+            // the list of visited nodes
+            var lastChoiceInst = tree[this.state.activeNode];
+            if (!lastChoiceInst) {
+                // TODO(tom) Handle error?
+                return;
+            }
+
+            while (lastChoiceInst) {
+                if (lastChoiceInst.id === choiceNode) {
+                    break;
+                }
+                lastChoiceInst = tree[lastChoiceInst.parentInst];
+            }
+            if (!lastChoiceInst) {
+                // TODO(tom) Handle error?
+                return;
+            }
+
+            this.state.choices[lastChoiceInst.id] = (
+                this.state.choices[lastChoiceInst.id] || []);
+            this.state.choices[lastChoiceInst.id].push(this.state.activeNode);
+
+            this.state.activeNode = [
+                lastChoiceInst.id, lastChoiceInst.instNum];
+            sessionStorage.activeNode = this.state.activeNode.join(":");
+
+            this.listenerComponent.forceUpdate();
+        };
+
+        this.restartGame = function() {
+            this.state = {
+                activeNode: ["START", 1],
+                // TODO(tom) Load this from session storage as well
+                choices: {}
+            };
+            sessionStorage.activeNode = this.state.activeNode.join(":");
+
+            this.listenerComponent.forceUpdate();
+        };
     })(GAME_TREE);
+
+    // For debugging
+    window.stateStore = stateStore;
 
     var ChatView = React.createClass({
         render: function() {
@@ -46,21 +98,27 @@
             }
 
             // Traverse up the tree back to the START node
+            var context = {};
             while (currentInst) {
                 instsToRender.push(currentInst);
-                currentInst = this.props.tree[currentInst.parentInst];
+                currentInst = this.getInstanceParent(currentInst, context);
             }
 
             // Render in reverse order (from START to activeNode)
             for (var idx = instsToRender.length - 1; idx >= 0; idx -= 1) {
                 var nodeClass = Nodes[instsToRender[idx].nodeType];
                 var viewClass = nodeClass.prototype.View;
+                var getInstanceParent = this.getInstanceParent;
                 var el = viewClass({
                     tree: this.props.tree,
                     inst: instsToRender[idx],
                     node: instsToRender[idx].node,
                     advanceCallback: this.props.advanceCallback,
-                    nextNode: (idx > 0 ? instsToRender[idx - 1] : null)
+                    saveAndReturnCallback: this.props.saveAndReturnCallback,
+                    nextNode: (idx > 0 ? instsToRender[idx - 1] : null),
+                    getParent: function(inst, context) {
+                        return getInstanceParent(inst, context);
+                    }
                 }, []);
                 var cls = nodeClass.prototype.getClassName(el.props);
                 outputElements.push(
@@ -77,8 +135,26 @@
             </div>;
         },
 
+        // Utility function to walk up the instance tree
+        getInstanceParent: function(inst, context) {
+            if (stateStore.state.choices[inst.id]) {
+                // If we're at a choice node, we may have some terminal nodes
+                // to visit before going back up the parent.
+                var index = (
+                    (context[inst.id] !== undefined) ?
+                    context[inst.id] - 1 :
+                    (stateStore.state.choices[inst.id].length - 1));
+                if (index >= 0) {
+                    context[inst.id] = index;
+                    return this.props.tree[
+                        stateStore.state.choices[inst.id][index]];
+                }
+            }
+            return this.props.tree[inst.parentInst];
+        },
+
+        // Force the chat to scroll to the bottom
         scrollToBottom: function() {
-            // Force the chat to scroll to the bottom
             var chatBody = React.findDOMNode(this);
             chatBody.scrollTop = 100000;
         },
@@ -111,6 +187,9 @@
                         activeNode={stateStore.state.activeNode}
                         advanceCallback={function(nextNode) {
                             stateStore.advanceToNextNode(nextNode);
+                        }}
+                        saveAndReturnCallback={function(choiceNode) {
+                            stateStore.saveAndReturn(choiceNode);
                         }} />
                 </div>
             </div>;

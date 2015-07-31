@@ -57,6 +57,9 @@ var GAME_TREE = {
             {label: "I'll let you go do homework then. BYE!", nextNode: "MON.END"},
         ]),
 
+    // A node that returns to the choice node above
+    "MON.CONVERSATION.CHOICE.RETURN": new Nodes.ReturnToChoice("MON.CONVERSATION.CHOICE"),
+
     /* Conversation about how school's going. */
     // Jesse's first response
     "MON.SCHOOL": new Nodes.RecvText(
@@ -105,7 +108,7 @@ var GAME_TREE = {
 
     "MON.SCHOOL.RESPONSE3b": new Nodes.SendChoice([
             {label: "I’m always here for you, cuz, no matter what.",
-            nextNode: "MON.CONVERSATION.CHOICE"}]),
+            nextNode: "MON.CONVERSATION.CHOICE.RETURN"}]),
 
 
     /**
@@ -178,7 +181,7 @@ var GAME_TREE = {
     // Jesse's a weirdo. Time to wrap this up.
     "MON.FUN.RESPONSE4": new Nodes.SendChoice([
             {label: "lol",
-            nextNode: "MON.CONVERSATION.CHOICE"}]),
+            nextNode: "MON.CONVERSATION.CHOICE.RETURN"}]),
 
 
     /**
@@ -225,7 +228,7 @@ var GAME_TREE = {
     // Ask MORE THINGS
     "MON.CITY.RESPONSE3a": new Nodes.SendChoice([
             {label: "Well, I can't wait to visit and you can show me the good stuff, and what smells to avoid.",
-            nextNode: "MON.CONVERSATION.CHOICE"}]),
+            nextNode: "MON.CONVERSATION.CHOICE.RETURN"}]),
 
 
     /**
@@ -266,7 +269,7 @@ var GAME_TREE = {
     // Jesse's second response
     "MON.HOMEWORK.RESPONSE1": new Nodes.SendChoice([
             {label: "Well, PROBABLY you'll get probability. 😜. Get it?",
-            nextNode: "MON.CONVERSATION.CHOICE"},
+            nextNode: "MON.CONVERSATION.CHOICE.RETURN"},
             {label: "What part do you not understand?",
             nextNode: "MON.HOMEWORK.ELABORATE1"}]),
 
@@ -278,13 +281,13 @@ var GAME_TREE = {
     // Jesse's afraid of cats, apparently
     "MON.HOMEWORK.RESPONSE2": new Nodes.SendChoice([
             {label: "I see.",
-            nextNode: "MON.CONVERSATION.CHOICE"},
+            nextNode: "MON.CONVERSATION.CHOICE.RETURN"},
             {label: "Do you want some help later?",
             nextNode: "MON.HOMEWORK.ACCEPT_HELP"}]),
 
     "MON.HOMEWORK.ACCEPT_HELP": new Nodes.RecvText(
             "Yeah, I'd love some! Thanks, you're the best",
-            "MON.CONVERSATION.CHOICE"),
+            "MON.CONVERSATION.CHOICE.RETURN"),
 
     // Wrap up Monday (currently ends game)
     "MON.END": new Nodes.RecvText(

@@ -10,15 +10,20 @@ var GAME_TREE = {
             {label: "Maybe", nextNode: "CHOICE.MAYBE"},
             {label: "No", nextNode: "CHOICE.NO"}
         ]),
+    "CHOICE.RETURN": new Nodes.ReturnToChoice("CHOICE"),
     "GREAT": new Nodes.RecvText(
         "Great! Thank you so much!",
         "END"),
     "CHOICE.MAYBE": new Nodes.RecvText(
         "Will you do it for a snickers bar?",
-        "CHOICE"),
+        "CHOICE.2"),
     "CHOICE.NO": new Nodes.RecvText(
         "Are you sure?",
-        "CHOICE"),
+        "CHOICE.RETURN"),
+    "CHOICE.2": new Nodes.SendChoice([
+        {label: "No I won't do it for a snickers bar.", nextNode: "END"},
+        {label: "I might do it for a snickers bar.", nextNode: "CHOICE.RETURN"}
+    ]),
     "END": new Nodes.GameOver()
 };
 module.exports = GAME_TREE;

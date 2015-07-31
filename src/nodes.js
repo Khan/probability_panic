@@ -92,7 +92,7 @@ var React = require("../lib/react-0.13.3.js");
     SendChoiceNode.prototype.type = "SendChoice";
 
     SendChoiceNode.prototype.getClassName = function(props) {
-        return (props.nextNode === null) ? "right" : "choice";
+        return (props.nextNode !== null) ? "right" : "choice";
     };
 
     SendChoiceNode.prototype.getNextNodes = function(id, parentList) {
@@ -123,7 +123,9 @@ var React = require("../lib/react-0.13.3.js");
                 var choice = this.props.node.choices[idx];
                 
                 // Has the user already selected this choice?
-                var parentInst = this.props.inst.parent;
+                var context = {};
+                var parentInst = this.props.getParent(
+                    this.props.inst, context);
                 var parentNextId = null;
                 var found = false;
                 while (parentInst) {
@@ -134,7 +136,7 @@ var React = require("../lib/react-0.13.3.js");
                     }
 
                     parentNextId = parentInst.id;
-                    parentInst = parentInst.parent;
+                    parentInst = this.props.getParent(parentInst, context);
                 }
                 if (found) {
                     continue;
@@ -147,18 +149,16 @@ var React = require("../lib/react-0.13.3.js");
 
         render: function() {
             var idx;
-            var validChoices = this.getValidChoices();
 
             if (this.props.nextNode) {
                 // Find the choice that corresponds to the next node
-                for (idx = 0; idx < validChoices.length; idx++) {
-                    var choiceIdx = validChoices[idx][0];
-                    if (this.props.inst.nextNodes[choiceIdx] &&
-                        (this.props.inst.nextNodes[choiceIdx][0] ===
+                for (idx = 0; idx < this.props.node.choices.length; idx++) {
+                    if (this.props.inst.nextNodes[idx] &&
+                        (this.props.inst.nextNodes[idx][0] ===
                          this.props.nextNode.id) &&
-                        (this.props.inst.nextNodes[choiceIdx][1] ===
+                        (this.props.inst.nextNodes[idx][1] ===
                          this.props.nextNode.instNum)) {
-                        return <div>{validChoices[idx][1].label}</div>;
+                        return <div>{this.props.node.choices[idx].label}</div>;
                     }
                 }
                     
@@ -167,6 +167,12 @@ var React = require("../lib/react-0.13.3.js");
             }
 
             var choiceElements = [];
+            var validChoices = this.getValidChoices();
+
+            if (validChoices.length === 1) {
+                // Don't display a button if there's a single option.
+                return <div>{validChoices[0][1].label}</div>;
+            }
 
             for (var idx = 0; idx < validChoices.length; idx++) {
                 var choice = validChoices[idx][1];
@@ -201,10 +207,32 @@ var React = require("../lib/react-0.13.3.js");
         }
     }));
 
+    // A special node that returns the user back to their last SendChoice node
+    // while remembering the history of their choices
+    var ReturnToChoiceNode = function(choiceNode) {
+        this.choiceNode = choiceNode;
+    };
+    ReturnToChoiceNode.prototype.type = "ReturnToChoice";
+    ReturnToChoiceNode.prototype.getClassName = function() {
+        return "hidden";
+    };
+    ReturnToChoiceNode.prototype.getNextNodes = function() { return {}; };
+    ReturnToChoiceNode.prototype.View = React.createFactory(React.createClass({
+        render: function() {
+            return <div />;
+        },
+
+        componentDidMount: function() {
+            // Send a special message to jump to the last choice node
+            this.props.saveAndReturnCallback(this.props.node.choiceNode);
+        }
+    }));
+
     module.exports = {
         GameOver: GameOverNode,
         RecvText: RecvTextNode,
         RecvImage: RecvImageNode,
-        SendChoice: SendChoiceNode
+        SendChoice: SendChoiceNode,
+        ReturnToChoice: ReturnToChoiceNode
     };
 })();
