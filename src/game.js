@@ -3,6 +3,7 @@
 // TODO(tom): Variables/flags/branching
 // TODO(tom): Final score/badges/etc.?
 // TODO(tom): Use actual KA avatar if available?
+// TODO(tom): Nicer-looking fonts
 
 (function() {
     var ChatView = React.createClass({

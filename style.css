@@ -2,6 +2,24 @@ body {
     margin: 0;
 }
 
+#heading {
+    background-color: #eee;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 100;
+}
+#heading .title {
+    font-size: 28px;
+    padding: 10px;
+}
+#heading .credits {
+    color: #688;
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
 .game-window {
     background-color: #fff;
     height: 100%;
