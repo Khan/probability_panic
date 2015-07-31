@@ -1,4 +1,3 @@
-// TODO(tom): Scroll down automatically
 // TODO(tom): Snapshot state at choice points
 // TODO(tom): Click a node to go back to that state
 // TODO(tom): Variables/flags/branching
@@ -38,11 +37,18 @@
                     </li>);
             }
 
-            return <div className="chat-body">
+            return <div className="chat-body" id="chat-body">
                 <div className="chat-aligner"></div>
                 <ol className="chat-container">{outputElements}</ol>
             </div>;
         },
+
+        componentDidUpdate: function() {
+            // Force the chat to scroll to the bottom
+            var chatBody = React.findDOMNode(this);
+            chatBody.scrollTop = 100000;
+
+        }
     });
 
     var GameView = React.createClass({
