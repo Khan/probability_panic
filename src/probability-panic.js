@@ -1,7 +1,8 @@
-window.GAME_TREE = Nodes.instantiateTree({
+var Nodes = require("../build/nodes.js");
+var GAME_TREE = {
     // Jesse says hi
     "START": new Nodes.RecvText(
-        "Hey, cousin!",
+        "Hey, cousin! 😊",
         "MON.START.RESPONSE"),
 
     // Say hi back to Jesse
@@ -19,7 +20,7 @@ window.GAME_TREE = Nodes.instantiateTree({
         "MON.JESSE.NEW2"),
 
     "MON.JESSE.NEW2": new Nodes.RecvText(
-        "I can’t talk too long. I already have homework. :(",
+        "I can’t talk too long. I already have homework. 😞",
         "MON.CONVERSATION.CHOICE"),
 
     // Conversation loop to ask about Jesse's life
@@ -67,7 +68,7 @@ window.GAME_TREE = Nodes.instantiateTree({
 
     // Wrap up conversation and redirect to choices
     "MON.SCHOOL.RESPONSE3a": new Nodes.SendChoice([
-            {label: "Well, good. Stay strong <3",
+            {label: "Well, good. Stay strong 💕",
             nextNode: "MON.SCHOOL.RESPONSE3b"}]),
 
     "MON.SCHOOL.RESPONSE3b": new Nodes.SendChoice([
@@ -104,7 +105,7 @@ window.GAME_TREE = Nodes.instantiateTree({
         "Noooo, but I’ve been meaning to get around to it! I heard it has cool illustrations?",
         "MON.FUN2b"),
     "MON.FUN2b": new Nodes.RecvText(
-        "But that cat has always sort of creeped me out :/",
+        "But that cat has always sort of creeped me out 😒",
         "MON.FUN.RESPONSE3a"),
 
     // Ask MORE THINGS
@@ -239,4 +240,5 @@ window.GAME_TREE = Nodes.instantiateTree({
         "END"),
 
     "END": new Nodes.GameOver()
-});
+};
+module.exports = GAME_TREE;

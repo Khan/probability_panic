@@ -1,4 +1,5 @@
-window.GAME_TREE = Nodes.instantiateTree({
+var Nodes = require("../build/nodes.js");
+var GAME_TREE = {
     "START": new Nodes.RecvText(
         "6:32pm", "NEXT", "info", 0),
     "NEXT": new Nodes.RecvText(
@@ -19,5 +20,5 @@ window.GAME_TREE = Nodes.instantiateTree({
         "Are you sure?",
         "CHOICE"),
     "END": new Nodes.GameOver()
-});
-
+};
+module.exports = GAME_TREE;

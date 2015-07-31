@@ -1,5 +1,9 @@
+var React = require("../lib/react-0.13.3.js");
 (function() {
+
     var GameOverNode = function() {};
+
+    GameOverNode.prototype.type = "GameOver";
 
     GameOverNode.prototype.getClassName = function() { return "info"; };
 
@@ -18,6 +22,8 @@
         // Next time defaults to 1 second
         this.nextTime = (nextTime === undefined) ? 1 : nextTime;
     };
+
+    RecvTextNode.prototype.type = "RecvText";
 
     RecvTextNode.prototype.getClassName = function() {
         return this.className;
@@ -46,6 +52,8 @@
         // { label: "...", nextNode: "..." }
         this.choices = choices;
     };
+
+    SendChoiceNode.prototype.type = "SendChoice";
 
     SendChoiceNode.prototype.getClassName = function(props) {
         return props.nextNode ? "right" : "choice";
@@ -149,54 +157,9 @@
         }
     }));
 
-    // Create a unique instance of a node in the output pool
-    var _instantiateNode = function(id, parentList, nodeTree, outputPool) {
-        var node = nodeTree[id];
-
-        // Find an available instance # for this node
-        var instanceNum = 1;
-        while (outputPool[[id, instanceNum]] !== undefined) {
-            instanceNum += 1;
-        }
-
-        // Create the new instance
-        outputPool[[id, instanceNum]] = {
-            id: id,
-            node: node,
-            parent: outputPool[parentList[parentList.length - 1]],
-            nextNodes: {},
-        };
-
-        // Recurse with each of the next nodes, creating a unique instance for
-        // each one
-        var nextNodes = node.getNextNodes(id, parentList);
-        for (var idx = 0; idx < nextNodes.length; idx++) {
-            var newParentList = parentList.slice();
-            newParentList.push([id, instanceNum])
-
-            var nextInstanceId = _instantiateNode(
-                nextNodes[idx], newParentList, nodeTree, outputPool);
-
-            outputPool[[id, instanceNum]].nextNodes[nextNodes[idx]] = (
-                    nextInstanceId);
-        }
-
-        return [id, instanceNum];
-    };
-
-    // Create unique instances for the entire tree of nodes, starting at
-    // the START node and traversing down
-    var instantiateTree = function(nodeTree) {
-        var outputPool = {};
-        _instantiateNode("START", [], nodeTree, outputPool);
-        return outputPool;
-    };
-
-    window.Nodes = {
+    module.exports = {
         GameOver: GameOverNode,
         RecvText: RecvTextNode,
-        SendChoice: SendChoiceNode,
-
-        instantiateTree: instantiateTree
+        SendChoice: SendChoiceNode
     };
 })();

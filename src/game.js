@@ -7,9 +7,12 @@
 // TODO(eli): Let multiple choices go to the same place
 // TODO(eli): Add a wait in between days
 // TODO(eli): Add animations
-// TODO(eli): Add emoji/escaping
 // TODO(eli): Add images
 // TODO(eli): Add to ka.org
+
+var React = require("../lib/react-0.13.3.js");
+var GAME_TREE = require("../build/final_tree.js");
+var Nodes = require("../build/nodes.js");
 
 (function() {
     var ChatView = React.createClass({
@@ -24,18 +27,21 @@
             // Traverse up the tree back to the START node
             while (currentInst) {
                 instsToRender.push(currentInst);
-                currentInst = currentInst.parent;
+                currentInst = this.props.tree[currentInst.parentInst];
             }
 
             // Render in reverse order (from START to activeNode)
             for (var idx = instsToRender.length - 1; idx >= 0; idx -= 1) {
-                var el = instsToRender[idx].node.View({
+                var nodeClass = Nodes[instsToRender[idx].nodeType];
+                var viewClass = nodeClass.prototype.View;
+                var el = viewClass({
+                    tree: this.props.tree,
                     inst: instsToRender[idx],
                     node: instsToRender[idx].node,
                     advanceCallback: this.props.advanceCallback,
                     nextNode: (idx > 0 ? instsToRender[idx - 1].id : null)
                 }, []);
-                var cls = instsToRender[idx].node.getClassName(el.props);
+                var cls = nodeClass.prototype.getClassName(el.props);
                 outputElements.push(
                     <li key={instsToRender[idx].node.id}>
                       <div className={"arrow " + cls}></div>
