@@ -50,7 +50,7 @@ var GAME_TREE = {
 
     // Conversation loop to ask about Jesse's life
     "MON.CONVERSATION.CHOICE": new Nodes.SendChoice([
-            {label: "School treating you ok?", nextNode: "MON.END"},
+            {label: "School treating you ok?", nextNode: "MON.SCHOOL"},
             {label: "Have you been doing anything for fun?", nextNode: "MON.FUN"},
             {label: "How's the city?", nextNode: "MON.CITY"},
             {label: "What kind of homework?", nextNode: "MON.HOMEWORK"},
@@ -155,8 +155,8 @@ var GAME_TREE = {
         "You mean this cat?",
         "MON.FUN.RESPONSE3b"),
 
-    "MON.FUN.RESPONSE3b": new Nodes.RecvImage(
-            "/images/cheshire-cat.jpg", "MON.FUN.RESPONSE3c", "right"),
+    "MON.FUN.RESPONSE3b": new Nodes.SendImage(
+            "/images/cheshire-cat.jpg", "MON.FUN.RESPONSE3c"),
 
     "MON.FUN.RESPONSE3c": new Nodes.SendText(
         "What part did you try out for?",
