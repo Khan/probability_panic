@@ -366,13 +366,14 @@ body {
 	-webkit-border-bottom-right-radius:40px 50px; 
 	-moz-border-radius-bottomright:40px 50px; 
 	border-bottom-right-radius:40px 50px; 
+    border-right: 2px solid #cacaca;
 	height: 10px;
 	/* using translate to avoid undesired appearance in CSS2.1-capabable but CSS3-incapable browsers */
-	-webkit-transform: translate(-10px, -2px);
-	-moz-transform: translate(-10px, -2px);
-	-ms-transform: translate(-10px, -2px);
-	-o-transform: translate(-10px, -2px);
-	transform: translate(-10px, -2px);
+	-webkit-transform: translate(-11px, -2px);
+	-moz-transform: translate(-11px, -2px);
+	-ms-transform: translate(-11px, -2px);
+	-o-transform: translate(-11px, -2px);
+	transform: translate(-11px, -2px);
 	width: 30px;
 }
 .chat-container .arrow.left:after {
@@ -417,13 +418,14 @@ body {
 	-webkit-border-bottom-left-radius:40px 50px; 
 	-moz-border-radius-bottomleft:40px 50px; 
 	border-bottom-left-radius:40px 50px; 
+    border-left: 2px solid #cacaca;
 	height: 10px;
 	/* using translate to avoid undesired appearance in CSS2.1-capabable but CSS3-incapable browsers */
-	-webkit-transform: translate(10px, -2px);
-	-moz-transform: translate(10px, -2px);
-	-ms-transform: translate(10px, -2px);
-	-o-transform: translate(10px, -2px);
-	transform: translate(10px, -2px);
+	-webkit-transform: translate(11px, -2px);
+	-moz-transform: translate(11px, -2px);
+	-ms-transform: translate(11px, -2px);
+	-o-transform: translate(11px, -2px);
+	transform: translate(11px, -2px);
 	width: 30px;
 }
 .chat-container .arrow.right:after {
