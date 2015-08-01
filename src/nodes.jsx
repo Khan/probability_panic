@@ -1,13 +1,13 @@
 var React = require("react");
 
 (function() {
+    var _defaultDelay = 3;
+
     var _autoAdvance = function() {
         // If we're the currently active node, wait the desired number of
         // seconds and then automatically advance
         if (this.props.nextNode === null) {
-            window.setTimeout(function() {
-                this.props.advanceCallback("NEXT");
-            }.bind(this), 1000 * this.props.node.nextTime);
+            this.props.advanceCallback(this.props.inst, "NEXT", this.props.node.delay);
         }
     };
     var AutoAdvanceMixin = function(classDef) {
@@ -50,12 +50,13 @@ var React = require("react");
         }
     }));
 
-    var RecvTextNode = function(text, nextId, className, nextTime) {
+    var RecvTextNode = function(text, nextId, className, delay) {
         this.text = text;
         this.nextId = nextId;
         this.className = className || "left";
-        // Next time defaults to 1 second
-        this.nextTime = (nextTime === undefined) ? 1 : nextTime;
+        // This is a heuristic, but let's give the players 12 characters/sec
+        // to read
+        this.delay = (delay === undefined) ? (text.length / 12.0) : delay;
     };
 
     RecvTextNode.prototype.type = "RecvText";
@@ -75,22 +76,22 @@ var React = require("react");
             },
         })));
 
-    var SendTextNode = function(text, nextId, className, nextTime) {
+    var SendTextNode = function(text, nextId, className, delay) {
         this.text = text;
         this.nextId = nextId;
         this.className = className || "right";
-        // Next time defaults to 1 second
-        this.nextTime = (nextTime === undefined) ? 1 : nextTime;
+        // This is a heuristic, but let's give the players 12 characters/sec
+        // to read
+        this.delay = (delay === undefined) ? (text.length / 12.0) : delay;
     };
 
     SendTextNode.prototype = Object.create(RecvTextNode.prototype, {})
 
-    RecvImageNode = function(src, nextId, className, nextTime) {
+    RecvImageNode = function(src, nextId, className, delay) {
         this.src = src;
         this.nextId = nextId;
         this.className = className || "left";
-        // Next time defaults to 1 second
-        this.nextTime = (nextTime === undefined) ? 1 : nextTime;
+        this.delay = (delay === undefined) ? _defaultDelay : delay;
     };
 
     RecvImageNode.prototype.type = "RecvImage";
@@ -110,12 +111,11 @@ var React = require("react");
             },
         })));
 
-    SendImageNode = function(src, nextId, className, nextTime) {
+    SendImageNode = function(src, nextId, className, delay) {
         this.src = src;
         this.nextId = nextId;
         this.className = className || "right";
-        // Next time defaults to 1 second
-        this.nextTime = (nextTime === undefined) ? 1 : nextTime;
+        this.delay = (delay === undefined) ? _defaultDelay : delay;
     };
 
     SendImageNode.prototype = Object.create(RecvImageNode.prototype, {})
@@ -213,9 +213,10 @@ var React = require("react");
 
             for (var idx = 0; idx < validChoices.length; idx++) {
                 var choice = validChoices[idx][1];
+                var curNode = this.props.inst;
 
                 var cb = (function(cb, next) {
-                    return function() { cb(next); };
+                    return function() { cb(curNode, next, 0); };
                 })(this.props.advanceCallback, validChoices[idx][0]);
 
                 choiceElements.push(
@@ -237,9 +238,7 @@ var React = require("react");
             // been selected) then just advance automatically after one second
             var validChoices = this.getValidChoices();
             if (validChoices.length === 1) {
-                window.setTimeout(function() {
-                    this.props.advanceCallback(validChoices[0][0]);
-                }.bind(this), 1000);
+                this.props.advanceCallback(this.props.inst, validChoices[0][0], _defaultDelay);
             }
         },
 
@@ -283,19 +282,12 @@ var React = require("react");
     TransitionNode.prototype.getNextNodes = function() {
         return {"NEXT": this.nextId};
     };
-    TransitionNode.prototype.View = React.createFactory(React.createClass({
-        render: function() {
-            return <div />;
-        },
-
-        componentDidMount: function() {
-            if (this.props.nextNode === null) {
-                window.setTimeout(function() {
-                    this.props.advanceCallback("NEXT");
-                }.bind(this), 1000 * this.props.node.delay);
+    TransitionNode.prototype.View = React.createFactory(React.createClass(
+        AutoAdvanceMixin({
+            render: function() {
+                return <div />;
             }
-        }
-    }));
+        })));
 
     module.exports = {
         GameOver: GameOverNode,

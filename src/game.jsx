@@ -13,29 +13,39 @@ var Nodes = require("./nodes.jsx");
 var stateStore = null;
 
 var StateStore = function(tree, component) {
-    var snapshot = sessionStorage.gameState;
-    if (snapshot) {
-        this.state = JSON.parse(snapshot);
-    }
 
-    if (!snapshot || !tree[this.state.activeNode]) {
-        // Reset state
-        this.state = {
-            activeNode: ["START", 1],
-            choices: {}
-        };
-    }
-
-    this.listenerComponent = component;
-
-    this.advanceToNextNode = function(nextNode) {
+    this.advanceToNextNode = function(inst, nextNode, delay) {
         var currentInst = tree[this.state.activeNode];
         if (!currentInst) {
             // TODO(tom) Handle error?
             return;
         }
 
+        if (currentInst !== inst) {
+            // TODO(tom) Handle error?
+            return;
+        }
+        
+        if (!currentInst.nextNodes[nextNode]) {
+            // TODO(tom) Handle error?
+            return;
+        }
+
+        if (this.currentTimeout) {
+            return;
+        }
+
+        if (delay > 0) {
+            this.currentTimeout = window.setTimeout(function() {
+                this.currentTimeout = null;
+                this.advanceToNextNode(inst, nextNode, 0);
+            }.bind(this), 1000 * delay);
+            return;
+        }
+
         this.state.activeNode = currentInst.nextNodes[nextNode];
+        this.animateOpen();
+
         this.saveSession();
 
         this.listenerComponent.forceUpdate();
@@ -67,6 +77,7 @@ var StateStore = function(tree, component) {
 
         this.state.activeNode = [
             lastChoiceInst.id, lastChoiceInst.instNum];
+        this.animateOpen();
 
         this.saveSession();
 
@@ -78,9 +89,18 @@ var StateStore = function(tree, component) {
             activeNode: ["START", 1],
             choices: {}
         };
+        this.animateOpen();
         this.saveSession();
 
         this.listenerComponent.forceUpdate();
+    };
+
+    this.animateOpen = function() {
+        this.activeNodeVisible = false;
+        window.setTimeout(function() {
+            this.activeNodeVisible = true;
+            this.listenerComponent.forceUpdate();
+        }.bind(this), 50);
     };
 
     this.saveSession = function() {
@@ -97,10 +117,24 @@ var StateStore = function(tree, component) {
         }
         return "morning";
     };
-};
 
-// For debugging
-window.stateStore = stateStore;
+    var snapshot = sessionStorage.gameState;
+    if (snapshot) {
+        this.state = JSON.parse(snapshot);
+    }
+
+    if (!snapshot || !tree[this.state.activeNode]) {
+        // Reset state
+        this.state = {
+            activeNode: ["START", 1],
+            choices: {}
+        };
+    }
+
+    this.listenerComponent = component;
+    this.currentTimeout = null;
+    this.animateOpen();
+};
 
 var ChatView = React.createClass({
     render: function() {
@@ -137,12 +171,17 @@ var ChatView = React.createClass({
                     return getInstanceParent(inst, context);
                 }
             }, []);
-            var cls = nodeClass.prototype.getClassName(el.props);
+            var nodeCls = nodeClass.prototype.getClassName(el.props);
+            var liCls = "";
+            if (idx == 0 && !stateStore.activeNodeVisible) {
+                liCls = "closed";
+            }
+            var key = instsToRender.length - idx;
             outputElements.push(
-                <li key={idx}>
-                  <div className={"arrow " + cls}></div>
-                  <div className={"bubble " + cls}>{el}</div>
-                  <div className={"avatar " + cls}></div>
+                <li key={key} className={liCls}>
+                  <div className={"arrow " + nodeCls}></div>
+                  <div className={"bubble " + nodeCls}>{el}</div>
+                  <div className={"avatar " + nodeCls}></div>
                 </li>);
         }
 
@@ -197,7 +236,10 @@ var GameView = React.createClass({
                 <div className="heading">
                     <div className="title">Probability Panic!</div>
                     <div className="credits">by Eli Feasley and Tom Yedwab. &copy; 2015 Khan Academy</div>
-                    <div className="instructions">More instructions here...</div>
+                    <div className="instructions">
+                        <p><a onClick={stateStore.restartGame.bind(stateStore)}>Start over</a></p>
+                        <p>More instructions here...</p>
+                    </div>
                 </div>
             </div>
             <div className="chat-window">
@@ -209,12 +251,9 @@ var GameView = React.createClass({
                 </div>
                 <ChatView tree={this.props.tree}
                     activeNode={stateStore.state.activeNode}
-                    advanceCallback={function(nextNode) {
-                        stateStore.advanceToNextNode(nextNode);
-                    }}
-                    saveAndReturnCallback={function(choiceNode) {
-                        stateStore.saveAndReturn(choiceNode);
-                    }} />
+                    advanceCallback={stateStore.advanceToNextNode.bind(stateStore)}
+                    saveAndReturnCallback={stateStore.saveAndReturn.bind(stateStore)}
+                    />
             </div>
         </div>;
     }
