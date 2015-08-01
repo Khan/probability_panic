@@ -220,11 +220,41 @@ var ChatView = React.createClass({
     }
 });
 
+var ReportView = React.createClass({
+    render: function() {
+        var instsToRender = [];
+        var scores = [];
+        var currentInst = this.props.tree[this.props.activeNode];
+        if (!currentInst) {
+            return <div>ERROR: Cannot find active node!</div>;
+        }
+
+        // Traverse up the tree back to the START node
+        while (currentInst) {
+            instsToRender.push(currentInst);
+            currentInst = this.props.tree[currentInst.parentInst];
+        }
+
+        // Render in reverse order (from START to activeNode)
+        for (var idx = instsToRender.length - 1; idx >= 0; idx -= 1) {
+            node = idx > 0 ? instsToRender[idx - 1].id : null;
+            console.log(node);
+            scores = scores.concat(this.props.report[node] ? this.props.report[node]: [])
+        }
+        console.log(scores);
+        return <div className="report-body" id="report-body">
+            <div className="report-container">{scores}</div>
+        </div>;
+    },
+});
+
+
 var GameView = React.createClass({
     render: function() {
         if (!stateStore) {
             stateStore = new StateStore(this.props.tree, this);
         }
+
         var timeOfDay = stateStore.getTimeOfDay();
         return <div className={"game-window " + timeOfDay}>
             <div className="sky-bg" />
@@ -238,6 +268,10 @@ var GameView = React.createClass({
                     </div>
                 </div>
             </div>
+        // <ReportView tree={this.props.tree}
+        //     report={this.props.report}
+        //     activeNode={stateStore.state.activeNode}/>
+        <div className="game-window">
             <div className="chat-window">
                 <div className="chat-header">
                     <div className="button btn1"></div>
@@ -251,6 +285,7 @@ var GameView = React.createClass({
                     saveAndReturnCallback={stateStore.saveAndReturn.bind(stateStore)}
                     />
             </div>
+        </div>
         </div>;
     }
 });

@@ -1,23 +1,5 @@
 var Nodes = require("../build/nodes.js");
 
-
-
-// Being at some nodes means that the player has just done something
-// mean or nice or promoting of growth mindset or w/e.
-// We want to be able to count this stuff at the end of the game so we
-// keep track of which nodes caused what states here.
-var NODE_TYPES = {
-    "MEAN": ["MON.HOMEWORK.OFFENDEDa",
-             "MON.HOMEWORK.OFFENDEDb"],
-    "NICE": ["MON.SCHOOL",
-             "MON.FUN",
-             "MON.CITY",
-             "MON.HOMEWORK"],
-    "GROWTH_MINDSET": ["MON.HOMEWORK.ELABORATEb"],
-    "FIXED_MINDSET": ["MON.HOMEWORK.ELABORATEa"],
-}
-
-
 var GAME_TREE = {
 
     "START": new Nodes.Transition(
