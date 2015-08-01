@@ -2,10 +2,6 @@
 // TODO(tom): Variables/flags/branching
 // TODO(tom): Final score/badges/etc.?
 // TODO(tom): Use actual KA avatar if available?
-// TODO(tom): Nicer-looking fonts
-// TODO(eli): Add a wait in between days
-// TODO(eli): Add animations
-// TODO(eli): Add to ka.org
 
 var React = require("react");
 var Nodes = require("./nodes.jsx");
