@@ -154,7 +154,7 @@ body {
     display: none;
 }
 .chat-container .bubble.left div {
-    background-color: #f2dafb;
+    background-color: #e0f6cb;
 }
 .chat-container .bubble.right div,
 .chat-container .bubble.choice div {
@@ -216,9 +216,9 @@ body {
     left: 30px;
 }
 .chat-container .bubble.left div:before {
-	background: #f2dafb;
+	background: #e0f6cb;
 	bottom: -2px;
-	border-right: 30px solid #f2dafb;
+	border-right: 30px solid #e0f6cb;
     left: -20px;
 }
 
@@ -307,7 +307,7 @@ body {
 }
 .chat-container .avatar.left {
     left: 0;
-    background: #fff url("https://www.khanacademy.org/images/avatars/duskpin-sapling.png") no-repeat top left;
+    background: #fff url("https://www.khanacademy.org/images/avatars/leafers-sapling.png") no-repeat top left;
     background-size: 36px 36px;
 }
 .chat-container .avatar.right,
