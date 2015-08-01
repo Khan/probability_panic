@@ -1,4 +1,5 @@
-var React = require("../lib/react-0.13.3.js");
+var React = require("react");
+
 (function() {
     var _autoAdvance = function() {
         // If we're the currently active node, wait the desired number of
