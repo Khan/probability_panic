@@ -86,6 +86,17 @@ var StateStore = function(tree, component) {
     this.saveSession = function() {
         sessionStorage.gameState = JSON.stringify(this.state);
     };
+
+    this.getTimeOfDay = function() {
+        var currentInst = tree[this.state.activeNode];
+        while (currentInst) {
+            if (currentInst.nodeType === "Transition") {
+                return currentInst.node.timeOfDay;
+            }
+            currentInst = tree[currentInst.parentInst];
+        }
+        return "morning";
+    };
 };
 
 // For debugging
@@ -179,7 +190,16 @@ var GameView = React.createClass({
         if (!stateStore) {
             stateStore = new StateStore(this.props.tree, this);
         }
-        return <div className="game-window">
+        var timeOfDay = stateStore.getTimeOfDay();
+        return <div className={"game-window " + timeOfDay}>
+            <div className="sky-bg" />
+            <div className="ground-bg">
+                <div className="heading">
+                    <div className="title">Probability Panic!</div>
+                    <div className="credits">by Eli Feasley and Tom Yedwab. &copy; 2015 Khan Academy</div>
+                    <div className="instructions">More instructions here...</div>
+                </div>
+            </div>
             <div className="chat-window">
                 <div className="chat-header">
                     <div className="button btn1"></div>

@@ -20,7 +20,10 @@ var NODE_TYPES = {
 
 var GAME_TREE = {
 
-    "START": new Nodes.RecvText(
+    "START": new Nodes.Transition(
+        "afternoon", "MON.START", 0),
+    
+    "MON.START": new Nodes.RecvText(
         "Monday, 5:43 PM",
         "MON.START.HELLO",
         "info", 0),
@@ -290,7 +293,7 @@ var GAME_TREE = {
     // Wrap up Monday (currently ends game)
     "MON.END": new Nodes.RecvText(
         "Love you. Talk to you soon!",
-        "WED.START"),
+        "WED.TRANSITION"),
 
 
 
@@ -302,7 +305,15 @@ var GAME_TREE = {
 
 
     // It's Wednesday. Two days have passed.
+    "WED.TRANSITION": new Nodes.Transition(
+        "morning", "WED.START", 5),
+
     "WED.START": new Nodes.RecvText(
+        "Wednesday, 11:12 AM",
+        "WED.START.HELLO",
+        "info", 0),
+
+    "WED.START.HELLO": new Nodes.RecvText(
         "Oh no! Trouble is coming my way.",
         "WED.START.RESPONSE"),
 
@@ -332,11 +343,23 @@ var GAME_TREE = {
 
     "WED.JESSE.QUIZd": new Nodes.RecvText(
         "HOW DO I PROBABILITY?",
+        "WED.JESSE.QUIZe"),
+
+    "WED.JESSE.QUIZe": new Nodes.RecvText(
+        "I've got to go. I'll be on later tonight.",
+        "WED.EVE.TRANSITION"),
+
+    "WED.EVE.TRANSITION": new Nodes.Transition(
+        "evening", "WED.EVE.START", 5),
+
+    "WED.EVE.START": new Nodes.RecvText(
+        "Wednesday, 9:12 PM",
+        "WED.EVE.BACK",
+        "info", 0),
+    
+    "WED.EVE.BACK": new Nodes.RecvText(
+        "I'm back. I'm a bit calmer now.",
         "WED.CALM.JESSE"),
-
-
-
-
 
     // Calm your cousin down
     "WED.CALM.JESSE": new Nodes.SendChoice([

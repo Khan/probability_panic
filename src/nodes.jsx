@@ -271,6 +271,32 @@ var React = require("react");
         }
     }));
 
+    var TransitionNode = function(timeOfDay, nextId, delay) {
+        this.timeOfDay = timeOfDay;
+        this.nextId = nextId;
+        this.delay = delay;
+    };
+    TransitionNode.prototype.type = "Transition";
+    TransitionNode.prototype.getClassName = function() {
+        return "hidden";
+    };
+    TransitionNode.prototype.getNextNodes = function() {
+        return {"NEXT": this.nextId};
+    };
+    TransitionNode.prototype.View = React.createFactory(React.createClass({
+        render: function() {
+            return <div />;
+        },
+
+        componentDidMount: function() {
+            if (this.props.nextNode === null) {
+                window.setTimeout(function() {
+                    this.props.advanceCallback("NEXT");
+                }.bind(this), 1000 * this.props.node.delay);
+            }
+        }
+    }));
+
     module.exports = {
         GameOver: GameOverNode,
         RecvText: RecvTextNode,
@@ -278,6 +304,7 @@ var React = require("react");
         RecvImage: RecvImageNode,
         SendImage: SendImageNode,
         SendChoice: SendChoiceNode,
-        ReturnToChoice: ReturnToChoiceNode
+        ReturnToChoice: ReturnToChoiceNode,
+        Transition: TransitionNode
     };
 })();
