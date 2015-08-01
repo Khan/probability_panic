@@ -20,11 +20,13 @@ body {
     z-index: 100;
 }
 #heading .title {
+    font-family: 'Roboto Slab', serif;
     font-size: 28px;
     padding: 10px;
 }
 #heading .credits {
     color: #688;
+    font-family: 'Raleway', sans-serif;
     font-size: 12px;
     padding: 5px 10px;
 }
@@ -42,10 +44,16 @@ body {
     border-radius: 5px;
     bottom: 10px;
     box-shadow: 3px 3px 8px #777;
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
     height: 70%;
     position: absolute;
     right: 10px;
     width: 500px;
+}
+.chat-window button {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
 }
 
 .chat-header {
