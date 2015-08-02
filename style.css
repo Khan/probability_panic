@@ -165,6 +165,18 @@ body {
     color: #EAE7DC;
 }
 
+.hidden {
+    display: none;
+}
+
+.jesse {
+    right: 10px;
+}
+
+.email {
+    left: 10px;
+}
+
 .chat-window {
     background-color: #ccc;
     border-radius: 5px;
@@ -174,7 +186,6 @@ body {
     font-size: 14px;
     height: 70%;
     position: absolute;
-    right: 10px;
     width: 500px;
     z-index: 110;
 }
@@ -183,6 +194,7 @@ body {
     font-size: 14px;
 }
 
+.report-header,
 .chat-header {
     padding: 2px 4px;
     position: absolute;
@@ -190,6 +202,7 @@ body {
     width: 100%;
 }
 
+.report-header .button,
 .chat-header .button {
     border-radius: 5px;
     box-shadow: inset 0 0 2px #111;
@@ -211,6 +224,16 @@ body {
 
 .chat-header .title {
     font-size: 12px;
+    left: 0;
+    line-height: 20px;
+    position: absolute;
+    right: 9px;
+    text-align: center;
+    top: 0;
+}
+
+.report-header .title {
+    font-size: 20px;
     left: 0;
     line-height: 20px;
     position: absolute;

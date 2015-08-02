@@ -158,7 +158,7 @@ var React = require("react");
             var validChoices = [];
             for (idx = 0; idx < this.props.node.choices.length; idx++) {
                 var choice = this.props.node.choices[idx];
-                
+
                 // Has the user already selected this choice?
                 var context = {};
                 var parentInst = this.props.getParent(

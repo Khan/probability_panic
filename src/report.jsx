@@ -14,9 +14,53 @@ var NODE_TYPES = {
 }
 
 
-
-var Report = function(points) {
+var Report = function(nodes_visited) {
 	var notifications = [];
+	var scores = []
+	var class_type = "chat-window email "
+	class_type += nodes_visited.indexOf("Have a great time at rehearsal!") <= 0 ? 'hidden' : '';
+	for (var idx = 0; idx < nodes_visited.length; idx += 1) {
+		scores = scores.concat(NODE_TYPES[nodes_visited[idx]] ? NODE_TYPES[nodes_visited[idx]]: []);
+	}
+
+    return <div className={class_type}>
+                <div className="report-header">
+                                <div className="title">Subject: Nice Job, Jesse! A-</div>
+                            </div><div className="chat-body report-body" id="report-body">
+        <div className="chat-container report-container">
+        <img src="/images/labs/quiz.jpg" width="300"/>
+        <p>
+        Well done, Jesse! You got a score of A- on your probability test!
+        </p>
+
+        <p>
+        You showed a lot of growth mindset this week! You know that doing well comes from
+        working hard, not built-in smarts.
+        That helps a lot with doing well. You worked really hard!
+        </p>
+
+        <p>
+        Spreading out your studies over the whole week was helpful for learning the materiel!
+        </p>
+
+        <p>
+        I noticed you studied one probability topic per day this week. In the future, you might
+        want to try studying different topics on different days - this is called mixing your practice,
+        and it helps you learn more.
+        </p>
+
+        <p>
+        Finally, it looks like you have a tutor who cares about you and pays attention
+        to what's going on in your life! Having a mentor who cares and is invested is
+        a major key to success!
+        </p>
+
+        <p> Write your own letter to Jesse:
+        	<a href="https://www.khanacademy.org/computer-programming/write-jesse-a-letter/5241985746206720">here</a>
+        </p>
+        </div>
+    </div>
+    </div>;
 }
 
-module.exports = NODE_TYPES;
+module.exports = Report;

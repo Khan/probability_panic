@@ -353,11 +353,9 @@ var GAME_TREE = {
     "Wow, you mean you're willing to help me? That's amazing!",
     "MON.RESPONSE.0"),
 
-    "MON.RESPONSE.0": new Nodes.SendChoice([
-    {label : "Of course! What's family for? Besides like being extremely annoying",
-    nextNode: "MON.RESPONSE.0a"},
-    {label : "Consider this a thank you for letting me be your cousin :)",
-    nextNode: "MON.RESPONSE.0a"}]),
+    "MON.RESPONSE.0": new Nodes.SendText(
+    "Of course! What's family for? Besides being extremely annoying",
+    "MON.RESPONSE.0a"),
 
     "MON.RESPONSE.0a": new Nodes.SendText(
     "and borrowing your shirts.",
@@ -468,7 +466,7 @@ var GAME_TREE = {
     "MON.RESPONSE.4"),
 
     "MON.RESPONSE.4": new Nodes.SendText(
-    "It’s good to experience hard things. It means you're learning!",
+    "It’s good to experience hard things. It mean's you're learning!",
     "MON.JESSE.5"),
 
     "MON.JESSE.5": new Nodes.RecvText(
@@ -588,352 +586,353 @@ var GAME_TREE = {
     "MON.JESSE.12"),
 
     "MON.JESSE.12": new Nodes.RecvText(
-    "Goodnight, friend",
+    "Happy Thursday",
+    "MON.JESSE.12a"),
+
+    "MON.JESSE.12a": new Nodes.RecvText(
+    "I wanted to let you know that my phone's almost out of battery",
+    "MON.JESSE.12b"),
+
+    "MON.JESSE.12b": new Nodes.RecvText(
+    "But I wanted to let you know I'm going to rock studying tonight!",
     "MON.RESPONSE.12"),
 
     "MON.RESPONSE.12": new Nodes.SendText(
-    "Hey, my phone's almost out of battery",
-    "MON.RESPONSE.12a"),
-
-    "MON.RESPONSE.12a": new Nodes.SendText(
-    "I just wanted to check in though, and let you know I'm going to rock studying tonight!",
+    "That's fantastic. I'm really glad to see you put in so much effort.",
     "MON.JESSE.13"),
 
     "MON.JESSE.13": new Nodes.RecvText(
-    "That's fantastic. I'm really glad to see you put in so much effort.",
+    "Also, I made a friend at school",
+    "MON.JESSE.13a"),
+
+    "MON.JESSE.13a": new Nodes.RecvText(
+    "and things are starting to get a little better, a little less lonely.",
+    "MON.JESSE.13b"),
+
+    "MON.JESSE.13b": new Nodes.RecvText(
+    "We went to the museum together and he has like all the same interests as me and invited me to join some clubs",
     "MON.RESPONSE.13"),
 
     "MON.RESPONSE.13": new Nodes.SendText(
-    "Also, I made a friend at school",
-    "MON.RESPONSE.13a"),
-
-    "MON.RESPONSE.13a": new Nodes.SendText(
-    "and things are starting to get a little better, a little less lonely.",
-    "MON.RESPONSE.13b"),
-
-    "MON.RESPONSE.13b": new Nodes.SendText(
-    "We went to the museum together and he has like all the same interests as me and invited me to join some clubs",
+    "That’s great news! What grade is he in?",
     "MON.JESSE.14"),
 
     "MON.JESSE.14": new Nodes.RecvText(
-    "That’s great news! What grade is he in?",
+    "Seventh, same as me. We share a bunch of classes.",
+    "MON.JESSE.14a"),
+
+    "MON.JESSE.14a": new Nodes.RecvText(
+    "And actually, we're studying together tonight, but I'll talk to you tomorrow!",
     "MON.RESPONSE.14"),
 
     "MON.RESPONSE.14": new Nodes.SendText(
-    "Seventh, same as me. We share a bunch of classes.",
-    "MON.RESPONSE.14a"),
-
-    "MON.RESPONSE.14a": new Nodes.SendText(
-    "And actually, we're studying together tonight, but I'll talk to you tomorrow!",
+    "Seeya!",
     "MON.JESSE.15"),
 
     "MON.JESSE.15": new Nodes.RecvText(
-    "Seeya!",
+    "Ok, ok, ok, I'm sort of freaking out again!",
+    "MON.JESSE.15a"),
+
+    "MON.JESSE.15a": new Nodes.RecvText(
+    "I know I was scared Tuesday, but now it's Thursday",
     "MON.RESPONSE.15"),
 
     "MON.RESPONSE.15": new Nodes.SendText(
-    "Ok, ok, ok, I'm sort of freaking out again!",
-    "MON.RESPONSE.15a"),
-
-    "MON.RESPONSE.15a": new Nodes.SendText(
-    "I know I was scared Tuesday, but now it's Thursday",
+    "You still have all those assignments due tomorrow?",
     "MON.JESSE.16"),
 
     "MON.JESSE.16": new Nodes.RecvText(
-    "You still have all those assignments due tomorrow?",
+    "Yeah! I’m mostly done but my mind is just all twisted around the probability stuff.",
+    "MON.JESSE.16a"),
+
+    "MON.JESSE.16a": new Nodes.RecvText(
+    "Would you mind going through some problems together?",
     "MON.RESPONSE.16"),
 
     "MON.RESPONSE.16": new Nodes.SendText(
-    "Yeah! I’m mostly done but my mind is just all twisted around the probability stuff.",
+    "Sure, no problem. I don't have much to do tonight.",
     "MON.RESPONSE.16a"),
 
     "MON.RESPONSE.16a": new Nodes.SendText(
-    "Would you mind going through some problems together?",
+    "And I love teaching things! It actually helps me learn things when I teach them. It solidifies the ideas.",
     "MON.JESSE.17"),
 
     "MON.JESSE.17": new Nodes.RecvText(
-    "Sure, no problem. I don't have much to do tonight.",
+    "Cool, thanks. I really appreciate it.",
     "MON.JESSE.17a"),
 
     "MON.JESSE.17a": new Nodes.RecvText(
-    "And I love teaching things! It actually helps me learn things when I teach them. It solidifies the ideas.",
+    "My teacher recommended this website called Khan Academy to me - have you heard of it?",
     "MON.RESPONSE.17"),
 
     "MON.RESPONSE.17": new Nodes.SendText(
-    "Cool, thanks. I really appreciate it.",
+    "Yeah, I actually used KA a lot to study for calculus.",
     "MON.RESPONSE.17a"),
 
     "MON.RESPONSE.17a": new Nodes.SendText(
-    "My teacher recommended this website called Khan Academy to me - have you heard of it?",
+    "It was actually really helpful,",
     "MON.JESSE.18"),
 
     "MON.JESSE.18": new Nodes.RecvText(
-    "Yeah, I actually used KA a lot to study for calculus.",
+    "I watched all of the videos but I'm still confused about a few things",
     "MON.JESSE.18a"),
 
     "MON.JESSE.18a": new Nodes.RecvText(
-    "It was actually really helpful,",
+    "The teacher suggested we might want to study using the Khan Academy exercises, so I've been trying them, but I'm sort of still struggling.",
     "MON.RESPONSE.18"),
 
     "MON.RESPONSE.18": new Nodes.SendText(
-    "I watched all of the videos but I'm still confused about a few things",
+    "I'll see what I can do to help",
     "MON.RESPONSE.18a"),
 
     "MON.RESPONSE.18a": new Nodes.SendText(
-    "The teacher suggested we might want to study using the Khan Academy exercises, so I've been trying them, but I'm sort of still struggling.",
+    "You know, you generally shouldn't leave studying to the last moment like this",
     "MON.JESSE.19"),
 
     "MON.JESSE.19": new Nodes.RecvText(
-    "I'll see what I can do to help",
+    "I know! I've actually been studying all week like you said",
     "MON.JESSE.19a"),
 
     "MON.JESSE.19a": new Nodes.RecvText(
-    "You know, you generally shouldn't leave studying to the last moment like this",
+    "But it's still hard.",
+    "MON.JESSE.19b"),
+
+    "MON.JESSE.19b": new Nodes.RecvText(
+    "Anyway, the problem I'm looking at now is this one",
+    "MON.JESSE.19c"),
+
+    "MON.JESSE.19c": new Nodes.RecvImage(
+    "images/card.jpg",
+    "MON.JESSE.19d"),
+
+    "MON.JESSE.19d": new Nodes.RecvText(
+    "Ahhhhhhhhh!",
     "MON.RESPONSE.19"),
 
     "MON.RESPONSE.19": new Nodes.SendText(
-    "I know! I've actually been studying all week like you said",
-    "MON.RESPONSE.19a"),
-
-    "MON.RESPONSE.19a": new Nodes.SendText(
-    "But it's still hard.",
-    "MON.RESPONSE.19b"),
-
-    "MON.RESPONSE.19b": new Nodes.SendText(
-    "Anyway, the problem I'm looking at now is this one",
-    "MON.RESPONSE.19c"),
-
-    "MON.RESPONSE.19c": new Nodes.SendImage(
-    "/images/labs/card.jpg",
-    "MON.RESPONSE.19d"),
-
-    "MON.RESPONSE.19d": new Nodes.SendText(
-    "Ahhhhhhhhh!",
+    "OK, don't worry. Let's work through this together",
     "MON.JESSE.20"),
 
     "MON.JESSE.20": new Nodes.RecvText(
-    "OK, don't worry. Let's work through this together",
+    "BUT I WANT TO WORRY",
     "MON.RESPONSE.20"),
 
     "MON.RESPONSE.20": new Nodes.SendText(
-    "BUT I WANT TO WORRY",
+    "What do you know about how to solve this kind of problem?",
+    "MON.RESPONSE.20a"),
+
+    "MON.RESPONSE.20a": new Nodes.SendText(
+    "What have you learned about this stuff so far?",
     "MON.JESSE.21"),
 
     "MON.JESSE.21": new Nodes.RecvText(
-    "What do you know about how to solve this kind of problem?",
-    "MON.JESSE.21a"),
-
-    "MON.JESSE.21a": new Nodes.RecvText(
-    "What have you learned about this stuff so far?",
+    "Well, I guess I know P means 'the probability of'",
     "MON.RESPONSE.21"),
 
     "MON.RESPONSE.21": new Nodes.SendText(
-    "Well, I guess I know P means 'the probability of'",
+    "What else? What do you see in the problem?",
     "MON.JESSE.22"),
 
     "MON.JESSE.22": new Nodes.RecvText(
-    "What else? What do you see in the problem?",
+    "I know that there are ten cards and that three of them are black",
+    "MON.JESSE.22a"),
+
+    "MON.JESSE.22a": new Nodes.RecvText(
+    "but isn't the probability then just not probable?",
     "MON.RESPONSE.22"),
 
     "MON.RESPONSE.22": new Nodes.SendText(
-    "I know that there are ten cards and that three of them are black",
-    "MON.RESPONSE.22a"),
-
-    "MON.RESPONSE.22a": new Nodes.SendText(
-    "but isn't the probability then just not probable?",
+    "Have you done any problems like this in the past?",
     "MON.JESSE.23"),
 
     "MON.JESSE.23": new Nodes.RecvText(
-    "Have you done any problems like this in the past?",
+    "Well, let me see...",
+    "MON.JESSE.23a"),
+
+    "MON.JESSE.23a": new Nodes.RecvText(
+    "Oh, here's one!",
+    "MON.JESSE.23b"),
+
+    "MON.JESSE.23b": new Nodes.RecvText(
+    "So i guess this means that I can set it up where the cards are like the balls",
+    "MON.JESSE.23c"),
+
+    "MON.JESSE.23c": new Nodes.RecvText(
+    "so it's ... 3 / (3 + 7)",
+    "MON.JESSE.23d"),
+
+    "MON.JESSE.23d": new Nodes.RecvText(
+    "which is .3",
+    "MON.JESSE.23e"),
+
+    "MON.JESSE.23e": new Nodes.RecvText(
+    "Wow! Thanks for you help!",
     "MON.RESPONSE.23"),
 
     "MON.RESPONSE.23": new Nodes.SendText(
-    "Well, let me see...",
+    "Awesome, you got it. Nice work. And I like the work you put into the initial exercise.",
     "MON.RESPONSE.23a"),
 
     "MON.RESPONSE.23a": new Nodes.SendText(
-    "Oh, here's one!",
-    "MON.RESPONSE.23b"),
-
-    "MON.RESPONSE.23b": new Nodes.SendText(
-    "So i guess this means that I can set it up where the cards are like the balls",
-    "MON.RESPONSE.23c"),
-
-    "MON.RESPONSE.23c": new Nodes.SendText(
-    "so it's ... 3 / (3 + 7)",
-    "MON.RESPONSE.23d"),
-
-    "MON.RESPONSE.23d": new Nodes.SendText(
-    "which is .3",
-    "MON.RESPONSE.23e"),
-
-    "MON.RESPONSE.23e": new Nodes.SendText(
-    "Wow! Thanks for you help!",
+    "The answer was in you all along, young one",
     "MON.JESSE.24"),
 
     "MON.JESSE.24": new Nodes.RecvText(
-    "Awesome, you got it. Nice work. And I like the work you put into the initial exercise.",
+    "Thanks, haha, I like markers!",
     "MON.JESSE.24a"),
 
     "MON.JESSE.24a": new Nodes.RecvText(
-    "The answer was in you all along, young one",
+    "I'm going to try tackling a few more problems, I'll let you know when I have more questions",
     "MON.RESPONSE.24"),
 
     "MON.RESPONSE.24": new Nodes.SendText(
-    "Thanks, haha, I like markers!",
-    "MON.RESPONSE.24a"),
-
-    "MON.RESPONSE.24a": new Nodes.SendText(
-    "I'm going to try tackling a few more problems, I'll let you know when I have more questions",
+    "sounds good!",
     "MON.JESSE.25"),
 
-    "MON.JESSE.25": new Nodes.RecvText(
-    "sounds good!",
+    "MON.JESSE.25": new Nodes.RecvImage(
+    "images/dhruv.png",
+    "MON.JESSE.25a"),
+
+    "MON.JESSE.25a": new Nodes.RecvText(
+    "I have SO MANY QUESTIONS:",
+    "MON.JESSE.25b"),
+
+    "MON.JESSE.25b": new Nodes.RecvText(
+    "Was his name always Dhruv?",
+    "MON.JESSE.25c"),
+
+    "MON.JESSE.25c": new Nodes.RecvText(
+    "Did he change it after he became an obsessive car dealership window shopper?",
+    "MON.JESSE.25d"),
+
+    "MON.JESSE.25d": new Nodes.RecvText(
+    "Did the name Dhruv CAUSE him to be a compulsive Dhruver?",
     "MON.RESPONSE.25"),
 
-    "MON.RESPONSE.25": new Nodes.SendImage(
-    "/images/labs/dhruv.png",
-    "MON.RESPONSE.25a"),
-
-    "MON.RESPONSE.25a": new Nodes.SendText(
-    "I have SO MANY QUESTIONS:",
-    "MON.RESPONSE.25b"),
-
-    "MON.RESPONSE.25b": new Nodes.SendText(
-    "Was his name always Dhruv?",
-    "MON.RESPONSE.25c"),
-
-    "MON.RESPONSE.25c": new Nodes.SendText(
-    "Did he change it after he became an obsessive car dealership window shopper?",
-    "MON.RESPONSE.25d"),
-
-    "MON.RESPONSE.25d": new Nodes.SendText(
-    "Did the name Dhruv CAUSE him to be a compulsive Dhruver?",
+    "MON.RESPONSE.25": new Nodes.SendText(
+    "These are the great imponderables of the universe.",
     "MON.JESSE.26"),
 
     "MON.JESSE.26": new Nodes.RecvText(
-    "These are the great imponderables of the universe.",
+    "I just started working on this problem and I tried to get the answer",
+    "MON.JESSE.26a"),
+
+    "MON.JESSE.26a": new Nodes.RecvText(
+    "but the site said I was wrong and I don't really understand why",
+    "MON.JESSE.26b"),
+
+    "MON.JESSE.26b": new Nodes.RecvText(
+    "I know I could ask the hints, but I like how you explain things",
+    "MON.JESSE.26c"),
+
+    "MON.JESSE.26c": new Nodes.RecvText(
+    "Here's the work I did so far",
+    "MON.JESSE.26d"),
+
+    "MON.JESSE.26d": new Nodes.RecvImage(
+    "images/problem2.png",
     "MON.RESPONSE.26"),
 
     "MON.RESPONSE.26": new Nodes.SendText(
-    "I just started working on this problem and I tried to get the answer",
+    "Looking through your steps, do you feel confident in every single one?",
     "MON.RESPONSE.26a"),
 
     "MON.RESPONSE.26a": new Nodes.SendText(
-    "but the site said I was wrong and I don't really understand why",
-    "MON.RESPONSE.26b"),
-
-    "MON.RESPONSE.26b": new Nodes.SendText(
-    "I know I could ask the hints, but I like how you explain things",
-    "MON.RESPONSE.26c"),
-
-    "MON.RESPONSE.26c": new Nodes.SendText(
-    "Here's the work I did so far",
-    "MON.RESPONSE.26d"),
-
-    "MON.RESPONSE.26d": new Nodes.SendImage(
-    "/images/labs/problem2.png",
+    "Or do any of the steps make you think “maybe I was just guessing here?”",
     "MON.JESSE.27"),
 
     "MON.JESSE.27": new Nodes.RecvText(
-    "Looking through your steps, do you feel confident in every single one?",
+    "I not so confident in the part where I set the denominator",
     "MON.JESSE.27a"),
 
     "MON.JESSE.27a": new Nodes.RecvText(
-    "Or do any of the steps make you think “maybe I was just guessing here?”",
+    "I'm not exactly sure what it's supposed to be but I put together the numbers I saw because that usually works?",
     "MON.RESPONSE.27"),
 
     "MON.RESPONSE.27": new Nodes.SendText(
-    "I not so confident in the part where I set the denominator",
+    "Remind me not to let you be a safety inspector at a nuclear facility :p",
     "MON.RESPONSE.27a"),
 
     "MON.RESPONSE.27a": new Nodes.SendText(
-    "I'm not exactly sure what it's supposed to be but I put together the numbers I saw because that usually works?",
+    "Just kidding, that sort of strategy works a lot, but as you move forward in math, it becomes more and more important to have some kind of intuition for what’s happening.",
+    "MON.RESPONSE.27b"),
+
+    "MON.RESPONSE.27b": new Nodes.SendText(
+    "If you think about what you know about probability, what do you think the denominator means?",
     "MON.JESSE.28"),
 
     "MON.JESSE.28": new Nodes.RecvText(
-    "Remind me not to let you be a safety inspector at a nuclear facility :p",
-    "MON.JESSE.28a"),
-
-    "MON.JESSE.28a": new Nodes.RecvText(
-    "Just kidding, that sort of strategy works a lot, but as you move forward in math, it becomes more and more important to have some kind of intuition for what’s happening.",
-    "MON.JESSE.28b"),
-
-    "MON.JESSE.28b": new Nodes.RecvText(
-    "If you think about what you know about probability, what do you think the denominator means?",
+    "It’s… the space of all possible outcomes? Oh! I see what happened! I can fix this!",
     "MON.RESPONSE.28"),
 
     "MON.RESPONSE.28": new Nodes.SendText(
-    "It’s… the space of all possible outcomes? Oh! I see what happened! I can fix this!",
+    "Great!",
     "MON.JESSE.29"),
 
     "MON.JESSE.29": new Nodes.RecvText(
-    "Great!",
+    "Hey, thanks so much for your help. It's getting kinda late now though, and I’m not making great progress anymore.",
     "MON.RESPONSE.29"),
 
     "MON.RESPONSE.29": new Nodes.SendText(
-    "Hey, thanks so much for your help. It's getting kinda late now though, and I’m not making great progress anymore.",
+    "Sounds like you should get some rest. You have a big day tomorrow",
     "MON.JESSE.30"),
 
     "MON.JESSE.30": new Nodes.RecvText(
-    "Sounds like you should get some rest. You have a big day tomorrow",
+    "Oy vey, tell me about it. I appreciate everything you've done.",
     "MON.RESPONSE.30"),
 
     "MON.RESPONSE.30": new Nodes.SendText(
-    "Oy vey, tell me about it. I appreciate everything you've done.",
+    "Let me know how it goes tomorrow, 'k?",
     "MON.JESSE.31"),
 
     "MON.JESSE.31": new Nodes.RecvText(
-    "Let me know how it goes tomorrow, 'k?",
+    "Sure! I'll text you as soon as I get my test back.",
     "MON.RESPONSE.31"),
 
     "MON.RESPONSE.31": new Nodes.SendText(
-    "Sure! I'll text you as soon as I get my test back.",
+    "Looking forward to it! Talk to you tomorrow!",
     "MON.JESSE.32"),
 
     "MON.JESSE.32": new Nodes.RecvText(
-    "Looking forward to it! Talk to you tomorrow!",
+    "I just got my test results in the email!",
+    "MON.JESSE.32a"),
+
+    "MON.JESSE.32a": new Nodes.RecvText(
+    "The teachers here are so tech-savvy!",
+    "MON.JESSE.32b"),
+
+    "MON.JESSE.32b": new Nodes.RecvText(
+    "I'll forward you the results.",
+    "MON.JESSE.32c"),
+
+    "MON.JESSE.32c": new Nodes.RecvText(
+    "Another exciting thing happened today though also!",
     "MON.RESPONSE.32"),
 
     "MON.RESPONSE.32": new Nodes.SendText(
-    "I just got my test results in the email!",
-    "MON.RESPONSE.32a"),
-
-    "MON.RESPONSE.32a": new Nodes.SendText(
-    "The teachers here are so tech-savvy!",
-    "MON.RESPONSE.32b"),
-
-    "MON.RESPONSE.32b": new Nodes.SendText(
-    "I'll forward you the results.",
-    "MON.RESPONSE.32c"),
-
-    "MON.RESPONSE.32c": new Nodes.SendText(
-    "Another exciting thing happened today though also!",
+    "Did you get the part in the play?",
     "MON.JESSE.33"),
 
     "MON.JESSE.33": new Nodes.RecvText(
-    "Did you get the part in the play?",
+    "Yeah, I totally did! I'm the cat! I'm going to look FIERCE! And terrifying.",
+    "MON.JESSE.33a"),
+
+    "MON.JESSE.33a": new Nodes.RecvText(
+    "I have to go to rehearsal now though, so I have to turn off my phone.",
     "MON.RESPONSE.33"),
 
     "MON.RESPONSE.33": new Nodes.SendText(
-    "Yeah, I totally did! I'm the cat! I'm going to look FIERCE! And terrifying.",
+    "Well, I’m glad you got the part!",
     "MON.RESPONSE.33a"),
 
     "MON.RESPONSE.33a": new Nodes.SendText(
-    "I have to go to rehearsal now though, so I have to turn off my phone.",
-    "MON.JESSE.34"),
-
-    "MON.JESSE.34": new Nodes.RecvText(
-    "Well, I’m glad you got the part!",
-    "MON.JESSE.34a"),
-
-    "MON.JESSE.34a": new Nodes.RecvText(
     "I'll check out your results.",
-    "MON.JESSE.34b"),
+    "MON.RESPONSE.33b"),
 
-    "MON.JESSE.34b": new Nodes.RecvText(
+    "MON.RESPONSE.33b": new Nodes.SendText(
     "Have a great time at rehearsal!",
     "END"),
+
 
 
     "END": new Nodes.GameOver()

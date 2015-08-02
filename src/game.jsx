@@ -21,7 +21,7 @@ var StateStore = function(tree, component) {
             // TODO(tom) Handle error?
             return;
         }
-        
+
         if (!currentInst.nextNodes[nextNode]) {
             // TODO(tom) Handle error?
             return;
@@ -222,45 +222,21 @@ var ChatView = React.createClass({
 
 var ReportView = React.createClass({
     render: function() {
-
-        var scores = [];
         var bubbles = $(".bubble");
+        var nodes = [];
         for (var idx = 0; idx < bubbles.length; idx += 1) {
             var bubble = bubbles[idx];
-            if (bubble.firstChild 
+            if (bubble.firstChild
                 && bubble.firstChild.firstChild
                 && typeof(bubble.firstChild.firstChild.data) == 'string')
             {
-                data =  bubble.firstChild.firstChild.data;
-                scores = scores.concat(this.props.report[data] ? this.props.report[data]: [])
+                nodes.push(bubble.firstChild.firstChild.data);
             }
         }
-        console.log(scores);
-        return <div className="report-body hidden" id="report-body">
-            <div className="report-container">{scores}</div>
-        </div>;
+        return this.props.report(nodes);
     },
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 var GameView = React.createClass({
     render: function() {
@@ -277,19 +253,20 @@ var GameView = React.createClass({
                     <div className="credits">by Eli Feasley and Tom Yedwab. &copy; 2015 Khan Academy</div>
                     <div className="instructions">
                         <p><a onClick={stateStore.restartGame.bind(stateStore)}>Start over</a></p>
-                        <p>More instructions here...</p>
+                        <p>Your cousin just moved to a new city and needs help and learning.</p>
+                        <p>Help Jesse do well, learn about learning, and win a badge!</p>
                     </div>
-                    <ReportView tree={this.props.tree}
-                    activeNode={stateStore.state.activeNode}
-                    advanceCallback={stateStore.advanceToNextNode.bind(stateStore)}
-                    saveAndReturnCallback={stateStore.saveAndReturn.bind(stateStore)}
-                    report={this.props.report}
-                    />
                 </div>
             </div>
 
         <div className="game-window">
-            <div className="chat-window">
+            <ReportView tree={this.props.tree}
+            activeNode={stateStore.state.activeNode}
+            advanceCallback={stateStore.advanceToNextNode.bind(stateStore)}
+            saveAndReturnCallback={stateStore.saveAndReturn.bind(stateStore)}
+            report={this.props.report}
+            />
+            <div className="chat-window jesse">
                 <div className="chat-header">
                     <div className="button btn1"></div>
                     <div className="button btn2"></div>
