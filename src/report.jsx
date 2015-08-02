@@ -3,14 +3,14 @@
 // We want to be able to count this stuff at the end of the game so we
 // keep track of which nodes caused what states here.
 var NODE_TYPES = {
-    "MON.HOMEWORK.OFFENDEDa": ["MEAN"],
-    "MON.HOMEWORK.OFFENDEDb": ["MEAN"],
-    "MON.SCHOOL": ["NICE"],
-    "MON.FUN": ["NICE"],
-    "MON.CITY": ["NICE"],
-    "MON.HOMEWORK": ["NICE"],
-    "MON.HOMEWORK.ELABORATEa": ["FIXED_MINDSET"],
-    "MON.HOMEWORK.ELABORATEb": ["GROWTH_MINDSET"],
+    "I'm disappointed in you. You must not be applying yourself enough.": ["MEAN"],
+    "Wah, wah. You don’t hear me complaining about how hard Calculus is.": ["MEAN"],
+    "School treating you ok?": ["NICE"],
+    "Have you been doing anything for fun?": ["NICE"],
+    "How's the city?": ["NICE"],
+    "What kind of homework?": ["NICE"],
+    "But you're smart, you were always good at math.": ["FIXED_MINDSET"],
+    "It's hard for everyone. Keep working at it and eventually you’ll get it!": ["GROWTH_MINDSET"],
 }
 
 

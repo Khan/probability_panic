@@ -5,7 +5,6 @@
 
 var React = require("react");
 var Nodes = require("./nodes.jsx");
-var Report = require("./report.js");
 
 var stateStore = null;
 
@@ -223,30 +222,44 @@ var ChatView = React.createClass({
 
 var ReportView = React.createClass({
     render: function() {
-        var instsToRender = [];
+
         var scores = [];
-        var currentInst = this.props.tree[this.props.activeNode];
-        if (!currentInst) {
-            return <div>ERROR: Cannot find active node!</div>;
-        }
-
-        // Traverse up the tree back to the START node
-        while (currentInst) {
-            instsToRender.push(currentInst);
-            currentInst = this.props.tree[currentInst.parentInst];
-        }
-
-        for (var idx = instsToRender.length - 1; idx >= 0; idx -= 1) {
-            node = idx > 0 ? instsToRender[idx - 1].id : null;
-            console.log(node);
-            scores = scores.concat(this.props.report[node] ? this.props.report[node]: [])
+        var bubbles = $(".bubble");
+        for (var idx = 0; idx < bubbles.length; idx += 1) {
+            var bubble = bubbles[idx];
+            if (bubble.firstChild 
+                && bubble.firstChild.firstChild
+                && typeof(bubble.firstChild.firstChild.data) == 'string')
+            {
+                data =  bubble.firstChild.firstChild.data;
+                scores = scores.concat(this.props.report[data] ? this.props.report[data]: [])
+            }
         }
         console.log(scores);
         return <div className="report-body hidden" id="report-body">
             <div className="report-container">{scores}</div>
         </div>;
     },
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 var GameView = React.createClass({
@@ -256,7 +269,6 @@ var GameView = React.createClass({
         }
 
         var timeOfDay = stateStore.getTimeOfDay();
-        console.log(this.props)
         return <div className={"game-window " + timeOfDay}>
             <div className="sky-bg" />
             <div className="ground-bg">
