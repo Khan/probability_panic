@@ -35,7 +35,7 @@ var StateStore = function(tree, component) {
             this.currentTimeout = window.setTimeout(function() {
                 this.currentTimeout = null;
                 this.advanceToNextNode(inst, nextNode, 0);
-            }.bind(this), 1000 * delay);
+            }.bind(this), 250 * delay);
             return;
         }
 
@@ -96,7 +96,7 @@ var StateStore = function(tree, component) {
         window.setTimeout(function() {
             this.activeNodeVisible = true;
             this.listenerComponent.forceUpdate();
-        }.bind(this), 50);
+        }.bind(this), 40);
     };
 
     this.saveSession = function() {
