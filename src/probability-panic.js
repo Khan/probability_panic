@@ -702,7 +702,7 @@ var GAME_TREE = {
     "MON.JESSE.19c"),
 
     "MON.JESSE.19c": new Nodes.RecvImage(
-    "images/card.jpg",
+    "/images/labs/card.jpg",
     "MON.JESSE.19d"),
 
     "MON.JESSE.19d": new Nodes.RecvText(
@@ -790,7 +790,7 @@ var GAME_TREE = {
     "MON.JESSE.25"),
 
     "MON.JESSE.25": new Nodes.RecvImage(
-    "images/dhruv.png",
+    "/images/labs/dhruv.png",
     "MON.JESSE.25a"),
 
     "MON.JESSE.25a": new Nodes.RecvText(
@@ -830,7 +830,7 @@ var GAME_TREE = {
     "MON.JESSE.26d"),
 
     "MON.JESSE.26d": new Nodes.RecvImage(
-    "images/problem2.png",
+    "/images/labs/problem2.png",
     "MON.RESPONSE.26"),
 
     "MON.RESPONSE.26": new Nodes.SendText(
