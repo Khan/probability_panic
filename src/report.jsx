@@ -19,5 +19,4 @@ var Report = function(points) {
 	var notifications = [];
 }
 
-
 module.exports = NODE_TYPES;

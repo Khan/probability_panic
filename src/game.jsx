@@ -5,6 +5,7 @@
 
 var React = require("react");
 var Nodes = require("./nodes.jsx");
+var Report = require("./report.js");
 
 var stateStore = null;
 
@@ -235,14 +236,13 @@ var ReportView = React.createClass({
             currentInst = this.props.tree[currentInst.parentInst];
         }
 
-        // Render in reverse order (from START to activeNode)
         for (var idx = instsToRender.length - 1; idx >= 0; idx -= 1) {
             node = idx > 0 ? instsToRender[idx - 1].id : null;
             console.log(node);
             scores = scores.concat(this.props.report[node] ? this.props.report[node]: [])
         }
         console.log(scores);
-        return <div className="report-body" id="report-body">
+        return <div className="report-body hidden" id="report-body">
             <div className="report-container">{scores}</div>
         </div>;
     },
@@ -256,6 +256,7 @@ var GameView = React.createClass({
         }
 
         var timeOfDay = stateStore.getTimeOfDay();
+        console.log(this.props)
         return <div className={"game-window " + timeOfDay}>
             <div className="sky-bg" />
             <div className="ground-bg">
@@ -266,6 +267,12 @@ var GameView = React.createClass({
                         <p><a onClick={stateStore.restartGame.bind(stateStore)}>Start over</a></p>
                         <p>More instructions here...</p>
                     </div>
+                    <ReportView tree={this.props.tree}
+                    activeNode={stateStore.state.activeNode}
+                    advanceCallback={stateStore.advanceToNextNode.bind(stateStore)}
+                    saveAndReturnCallback={stateStore.saveAndReturn.bind(stateStore)}
+                    report={this.props.report}
+                    />
                 </div>
             </div>
 

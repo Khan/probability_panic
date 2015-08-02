@@ -284,8 +284,6 @@ var GAME_TREE = {
 
 
 
-
-
     // It's Wednesday. Two days have passed.
     "WED.TRANSITION": new Nodes.Transition(
         "morning", "WED.START", 5),
