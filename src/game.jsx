@@ -268,9 +268,7 @@ var GameView = React.createClass({
                     </div>
                 </div>
             </div>
-        <ReportView tree={this.props.tree}
-            report={this.props.report}
-            activeNode={stateStore.state.activeNode}/>
+
         <div className="game-window">
             <div className="chat-window">
                 <div className="chat-header">
